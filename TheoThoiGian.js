@@ -46,8 +46,8 @@ fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
         console.error('Đã xảy ra sự cố khi tìm nạp dữ liệu:', error);
     });
 
-import { loaiBoKyTuDacBiet } from 'DoanTatCa.js';
-import { loaiBoTuHienTai } from 'DoanTatCa.js';
-import { chonTu } from 'DoanTatCa.js';
-import { xaoTron } from 'DoanTatCa.js';
-import { kiemTra } from 'DoanTatCa.js';
+import { loaiBoKyTuDacBiet } from './DoanTatCa.js';
+import { loaiBoTuHienTai } from './DoanTatCa.js';
+import { chonTu } from './DoanTatCa.js';
+import { xaoTron } from './DoanTatCa.js';
+import { kiemTra } from './DoanTatCa.js';
