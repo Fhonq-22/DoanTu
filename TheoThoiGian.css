@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.word-container {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#inputDoan {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#btnDoan {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+#btnDoan:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: bold;
+}
+#timeConLai {
+    margin-top: 20px;
+    font-weight: bold;
+}
