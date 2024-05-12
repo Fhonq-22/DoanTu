@@ -35,7 +35,7 @@ function xaoTron(word) {
 }
 
 function kiemTra() {
-    const doan = document.getElementById('inputDoan').value.trim().toLowerCase();
+    const doan = document.getElementById('inputDoan').value.trim();
     if (doan === tuHienTai) {
         document.getElementById('message').textContent = 'Chính xác!';
         document.getElementById('inputDoan').value = '';
