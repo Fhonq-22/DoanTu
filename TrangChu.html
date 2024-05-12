@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+    <link rel="stylesheet" href="TrangChu.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Trang Chủ</h1>
+        <div id="buttons">
+            <button id="btnSoMang" onclick="hienThiChonSoMang()">Đoán theo số mạng</button>
+            <button id="btnThoiGian" onclick="hienThiChonThoiGian()">Đoán theo thời gian</button>
+            <button onclick="chuyenDenDoanTatCa()">Đoán tất cả</button>
+        </div>
+        <div id="chonSoMang" class="option" style="display: none;">
+            <label for="soMang">Chọn số mạng:</label>
+            <select id="soMang">
+                <option value="1">1 lần</option>
+                <option value="2">2 lần</option>
+                <option value="3">3 lần</option>
+                <option value="4">4 lần</option>
+                <option value="5">5 lần</option>
+            </select>
+            <button onclick="chuyenDenTheoSoMang()">Xác nhận</button>
+            <button onclick="quayLaiTuChonSoMang()">Quay lại</button>
+        </div>
+        <div id="chonThoiGian" class="option" style="display: none;">
+            <label for="thoiGian">Chọn thời gian:</label>
+            <select id="thoiGian">
+                <option value="15">15 giây</option>
+                <option value="30">30 giây</option>
+                <option value="45">45 giây</option>
+                <option value="60">1 phút</option>
+                <option value="120">2 phút</option>
+                <option value="180">3 phút</option>
+            </select>
+            <button onclick="chuyenDenTheoThoiGian()">Xác nhận</button>
+            <button onclick="quayLaiTuChonThoiGian()">Quay lại</button>
+        </div>
+    </div>
+    <script src="TrangChu.js"></script>
+</body>
+</html>

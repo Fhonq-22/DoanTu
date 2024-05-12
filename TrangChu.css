@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+#buttons {
+    margin-bottom: 20px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    position: relative; /* Thêm vào để đảm bảo hiển thị đúng */
+    z-index: 1; /* Thêm vào để đảm bảo hiển thị đúng */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.option {
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
