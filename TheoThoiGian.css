@@ -1,48 +1,79 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 20px;
+    padding: 20px;
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
 }
 
 h1 {
-    margin-top: 50px;
+    color: #333;
 }
 
 .container {
-    margin-top: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    padding: 20px;
+    border-radius: 40px;
 }
 
 .word-container {
+    margin: 20px auto;
+}
+
+#word {
     font-size: 24px;
-    margin-bottom: 20px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #afeeee;
+    border: 2px solid #add8e6;
+    border-radius: 10px;
 }
 
 #inputDoan {
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 10px auto;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ff6666;
+    max-width: 90%;
+    border-radius: 10px;
+    border: none;
+    border-bottom: 4px solid #ff6666;
+    outline: none;
 }
 
 #btnDoan {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #ffb6c1;
+    border: 2px solid #ff6666;
+    border-radius: 10px;
 }
 
-#btnDoan:hover {
-    background-color: #0056b3;
+#btnDoan:focus {
+    background-color: #ff6666;
 }
 
-#message {
+#message, #timeConLai{
     margin-top: 20px;
     font-weight: bold;
+    font-size: 18px;
 }
-#timeConLai {
-    margin-top: 20px;
-    font-weight: bold;
+
+.message-correct {
+    color: #008000;
+}
+
+.message-incorrect {
+    color: #FF0000;
+}
+
+p {
+    margin-bottom: 10px;
 }
