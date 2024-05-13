@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +17,14 @@
         <div id="chonSoMang" class="option" style="display: none;">
             <label for="soMang">Chọn số mạng:</label>
             <select id="soMang">
-                <option value="1">1 lần</option>
-                <option value="2">2 lần</option>
-                <option value="3">3 lần</option>
-                <option value="4">4 lần</option>
-                <option value="5">5 lần</option>
+                <option value="1">1 ❤</option>
+                <option value="2">2 ❤</option>
+                <option value="3">3 ❤</option>
+                <option value="4">4 ❤</option>
+                <option value="5">5 ❤</option>
             </select>
             <button onclick="chuyenDenTheoSoMang()">Xác nhận</button>
-            <button onclick="quayLaiTuChonSoMang()">Quay lại</button>
+            <button onclick="quayLaiTuChonSoMang()" class="cancel-btn">✕</button>
         </div>
         <div id="chonThoiGian" class="option" style="display: none;">
             <label for="thoiGian">Chọn thời gian:</label>
@@ -37,9 +37,11 @@
                 <option value="180">3 phút</option>
             </select>
             <button onclick="chuyenDenTheoThoiGian()">Xác nhận</button>
-            <button onclick="quayLaiTuChonThoiGian()">Quay lại</button>
+            <button onclick="quayLaiTuChonThoiGian()" class="cancel-btn">✕</button>
         </div>
+        <div class="overlay"></div>
     </div>
+    
     <script src="TrangChu.js"></script>
 </body>
 </html>
