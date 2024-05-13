@@ -35,6 +35,11 @@ body {
     font-weight: bold;
     font-size: 20px;
     color: #ff6666;
+    max-width: 90%;
+    border-radius: 10px;
+    border: none;
+    border-bottom: 4px solid #ff6666;
+    outline: none;
 }
 
 #btnDoan {
