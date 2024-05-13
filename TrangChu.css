@@ -1,17 +1,37 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 20px;
+    padding: 20px;
     text-align: center;
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
 }
 
 .container {
     position: relative;
-    z-index: 1;
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    padding: 20px;
+    border-radius: 40px;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top left, #ffb6c1, #add8e6);
+    border-radius: 40px;
+    filter: blur(10px);
+    z-index: -1;
 }
 
 h1 {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #buttons {
@@ -20,32 +40,103 @@ h1 {
 
 button {
     margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 20px 30px;
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    position: relative; /* Thêm vào để đảm bảo hiển thị đúng */
-    z-index: 1; /* Thêm vào để đảm bảo hiển thị đúng */
+    border: 2px solid #add8e6;
+    box-shadow: 0 0 20px #add8e6;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    background-color: #afeeee;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #add8e6;
+}
+
+button:focus {
+    background-color: #ffb6c1;
+}
+
+.option {
+    position: absolute;
+    border-radius: 20px;
+    border: 1px solid #ff6666;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background: linear-gradient(to top left, #ffb6c1, #add8e6);
+    width: 80%;
 }
 
 select {
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-.option {
-    margin-top: 20px;
+.option label,
+.option button {
+    display: block;
+    margin: 10px;
+}
+
+.option button {
+    width: 70%;
+    margin: 10px auto;
+    padding: 15px 0;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #add8e6;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    background-color: #afeeee;
+}
+
+.option button:hover {
+    background-color: #add8e6;
+}
+
+.option button:focus {
+    background-color: #ffb6c1;
+}
+
+.option button.cancel-btn {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    top: -10px;
+    right: 0;
+    font-size: 22px;
+    font-weight: bold;
+    background: #ff6666;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     z-index: 2;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+    z-index: 1;
+    display: none;
+}
+
+.container.option-visible .overlay {
+    display: block;
+    backdrop-filter: blur(5px);
 }
