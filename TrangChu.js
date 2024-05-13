@@ -1,19 +1,23 @@
 function hienThiChonSoMang() {
     document.getElementById('chonSoMang').style.display = 'block';
     document.getElementById('chonThoiGian').style.display = 'none';
+    document.querySelector('.container').classList.add('option-visible');
 }
 
 function hienThiChonThoiGian() {
     document.getElementById('chonThoiGian').style.display = 'block';
     document.getElementById('chonSoMang').style.display = 'none';
+    document.querySelector('.container').classList.add('option-visible');
 }
 
 function quayLaiTuChonSoMang() {
     document.getElementById('chonSoMang').style.display = 'none';
+    document.querySelector('.container').classList.remove('option-visible');
 }
 
 function quayLaiTuChonThoiGian() {
     document.getElementById('chonThoiGian').style.display = 'none';
+    document.querySelector('.container').classList.remove('option-visible');
 }
 
 function chuyenDenTheoSoMang() {
