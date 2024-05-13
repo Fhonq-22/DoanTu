@@ -30,11 +30,15 @@ function kiemTra() {
     const doan = document.getElementById('inputDoan').value.trim();
     if (doan === tuHienTai) {
         document.getElementById('message').textContent = 'Chính xác!';
+        document.getElementById('message').classList.remove('message-incorrect');
+        document.getElementById('message').classList.add('message-correct');
         document.getElementById('inputDoan').value = '';
         loaiBoTuHienTai();
         chonTu();
     } else {
         document.getElementById('message').textContent = 'Sai rồi, hãy thử lại!';
+        document.getElementById('message').classList.remove('message-correct');
+        document.getElementById('message').classList.add('message-incorrect');
         soMangConLai--;
         document.getElementById('mangConLai').textContent = `Số mạng còn lại: ${soMangConLai}`;
         if (soMangConLai <= 0) {
