@@ -1,46 +1,66 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
 }
 
 .container {
-    text-align: center;
-    margin-top: 50px;
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    padding: 20px;
+    border-radius: 40px;
 }
 
 .word-container {
-    margin-bottom: 20px;
+    margin: 20px auto;
 }
 
 #word {
     font-size: 24px;
     display: inline-block;
     padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #afeeee;
+    border: 2px solid #add8e6;
+    border-radius: 10px;
 }
 
-.guess-input {
-    padding: 5px;
-    margin-bottom: 10px;
+#inputDoan {
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #ff6666;
 }
 
-.guess-btn {
-    padding: 8px 20px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
+#btnDoan {
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #ffb6c1;
+    border: 2px solid #ff6666;
+    border-radius: 10px;
 }
 
-.guess-btn:hover {
-    background-color: #45a049;
+#btnDoan:focus {
+    background-color: #ff6666;
 }
 
-.message {
+#message {
     margin-top: 20px;
     font-weight: bold;
+    font-size: 18px;
+}
+
+.message-correct {
+    color: #008000;
+}
+
+.message-incorrect {
+    color: #FF0000;
 }
