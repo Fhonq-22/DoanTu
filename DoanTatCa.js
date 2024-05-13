@@ -38,11 +38,17 @@ function kiemTra() {
     const doan = document.getElementById('inputDoan').value.trim();
     if (doan === tuHienTai) {
         document.getElementById('message').textContent = 'Chính xác!';
+        document.getElementById('message').classList.remove('message-incorrect');
+        document.getElementById('message').classList.add('message-correct');
         document.getElementById('inputDoan').value = '';
         loaiBoTuHienTai();
         chonTu();
     } else {
+        console.log('.'+doan+'.');
+        console.log('.'+tuHienTai+'.');
         document.getElementById('message').textContent = 'Sai rồi, hãy thử lại!';
+        document.getElementById('message').classList.remove('message-correct');
+        document.getElementById('message').classList.add('message-incorrect');
     }
 }
 
