@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Đoán Từ</title>
     <link rel="stylesheet" href="DoanTatCa.css">
+    <link rel="stylesheet" href="libs/uicons-solid-rounded.css">
 </head>
 <body>
     <div class="container">
@@ -13,7 +14,27 @@
         </div>
         <input id="inputDoan" type="text" placeholder="Nhập từ đoán của bạn">
         <button id="btnDoan">Đoán</button>
+        <button id="btnBoQua">
+            <i class="fi fi-sr-arrow-square-right"></i>
+            <div id="boQuaCount">5</div>
+        </button>
+        <button id="btnKetThuc">
+            <i class="fi fi-sr-cross-circle"></i>
+        </button>
         <p id="message"></p>
+        <div id="ketThucDiv" class="ket-thuc">
+            <h2>Kết thúc trò chơi</h2>
+            <p>
+                <i class="fi fi-sr-flame"></i>
+                <span id="maxStreak">0</span>
+            </p>
+            <button id="troVeTrangChu">
+                <i class="fi fi-sr-home"></i>
+            </button>
+            <button id="choiLai">
+                <i class="fi fi-sr-rotate-square"></i>
+            </button>
+        </div>
     </div>
 
     <script type="module" src="DoanTatCa.js"></script>
