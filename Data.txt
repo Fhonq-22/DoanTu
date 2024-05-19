@@ -117,7 +117,7 @@ Cái gối
 Cánh cửa
 Công an
 Công dân
-Chìa khóa
+Chìa khoá
 Cửa ra
 Cú đánh
 Cây cảnh
@@ -621,7 +621,7 @@ Uốn éo
 Ứng phó
 Ưu đãi
 Ước lượng
-Ủy ban
+Uỷ ban
 Ưu việt
 Ủi quần
 Vĩ đại
