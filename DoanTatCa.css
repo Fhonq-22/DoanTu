@@ -1,59 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
-    text-align: center;
     background-color: #f5f5f5;
-    color: black;
-    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
     max-width: 600px;
-    margin: auto;
-    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    width: 100%;
     padding: 20px;
-    border-radius: 40px;
+    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .word-container {
-    margin: 20px auto;
+    margin: 20px 0;
 }
 
 #word {
     font-size: 24px;
-    display: inline-block;
     padding: 10px;
     background-color: #afeeee;
     border: 2px solid #add8e6;
     border-radius: 10px;
+    display: inline-block;
 }
 
 #inputDoan {
     padding: 10px;
-    margin: 10px;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     color: #ff6666;
-    max-width: 90%;
-    border-radius: 10px;
     border: none;
-    border-bottom: 4px solid #ff6666;
+    border-bottom: 2px solid #ff6666;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px);
+    box-sizing: border-box;
+    outline: none;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:focus {
     outline: none;
 }
 
 #btnDoan {
-    padding: 10px;
-    margin: 10px;
-    font-weight: bold;
-    font-size: 20px;
     background-color: #ffb6c1;
-    border: 2px solid #ff6666;
-    border-radius: 10px;
+    color: #fff;
 }
 
+#btnDoan:hover,
 #btnDoan:focus {
-    background-color: #ff6666;
+    background-color: #ff6f81;
+}
+
+#btnBoQua {
+    position: relative;
+    background-color: #ffecb3;
+    color: #ff9800;
+}
+
+#btnBoQua:hover,
+#btnBoQua:focus {
+    background-color: #ffd54f;
+}
+
+#btnKetThuc {
+    background-color: #ffe6e6;
+    color: #ff6666;
+}
+
+#btnKetThuc:hover,
+#btnKetThuc:focus {
+    background-color: #ffcccc;
+}
+
+#boQuaCount {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff9800;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
 }
 
 #message {
@@ -63,9 +119,69 @@ body {
 }
 
 .message-correct {
-    color: #008000;
+    color: #2ecc71;
 }
 
 .message-incorrect {
-    color: #FF0000;
+    color: #e74c3c;
+}
+
+.ket-thuc {
+    display: none;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.ket-thuc h2 {
+    margin-bottom: 20px;
+    color: #ff6666;
+}
+
+.ket-thuc p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.ket-thuc p i {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #ff6666;
+}
+
+#troVeTrangChu,
+#choiLai {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    margin: 10px 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#troVeTrangChu {
+    background-color: #e6e6fa;
+    color: #9370db;
+}
+
+#troVeTrangChu:hover,
+#troVeTrangChu:focus {
+    background-color: #dcdcff;
+}
+
+#choiLai {
+    background-color: #b0e0e6;
+    color: #4682b4;
+}
+
+#choiLai:hover,
+#choiLai:focus {
+    background-color: #add8e6;
 }
