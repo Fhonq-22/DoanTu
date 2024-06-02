@@ -105,7 +105,10 @@ document.getElementById('inputDoan').addEventListener('keypress', function(event
 });
 document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('btnBoQua').addEventListener('click', boQua);
-document.getElementById('btnKetThuc').addEventListener('click', hienThiKetThuc);
+const btnKetThuc = document.getElementById('btnKetThuc');
+if (btnKetThuc) {
+    btnKetThuc.addEventListener('click', hienThiKetThuc);
+}
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
