@@ -119,15 +119,6 @@ button i {
     background-color: #e57373;
 }
 
-#btnBatDauLai {
-    background-color: #add8e6;
-    color: #4682b4;
-}
-
-#btnBatDauLai:hover,
-#btnBatDauLai:focus {
-    background-color: #87cefa;
-}
 
 #message, #mangConLai {
     margin-top: 20px;
