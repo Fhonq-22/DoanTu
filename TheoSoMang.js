@@ -1,3 +1,5 @@
+import { loaiBoKyTuDacBiet, loaiBoTuHienTai, xaoTron, chonTu } from './DoanTatCa.js';
+
 let dsTu = [];
 let tuHienTai = '';
 let soMang = getSoMangFromURL();
@@ -60,97 +62,53 @@ function boQua() {
     }
 }
 
-function capNhatLichSuSai() {
-    const ul = document.getElementById('danhSachSai');
-    ul.innerHTML = '';
-    const lichSuCounts = {};
-    lichSuSai.forEach(tu => {
-        if (!lichSuCounts[tu]) {
-            lichSuCounts[tu] = 1;
-        } else {
-            lichSuCounts[tu]++;
-        }
-    });
-    for (const tu in lichSuCounts) {
-        const li = document.createElement('li');
-        li.textContent = `${tu} (${lichSuCounts[tu]})`;
-        ul.appendChild(li);
-    }
-}
-
 function ketThucTroChoi() {
     document.getElementById('inputDoan').disabled = true;
     document.getElementById('btnDoan').disabled = true;
     document.getElementById('btnBoQua').disabled = true;
-    document.getElementById('btnHuyBo').disabled = true;
-    document.getElementById('message').textContent = 'Trò chơi kết thúc!';
-    thoiGianKetThuc = Date.now();
-    tongThoiGianDoan = thoiGianKetThuc - thoiGianBatDau;
-    hienThiKetThuc();
-    capNhatLichSuSai();
+    document.getElementById('ketThucDiv').style.display = 'block';
+    document.getElementById('soTuDoanDung').textContent = soTuDoanDung;
+    document.getElementById('lichSuSai').textContent = lichSuSai.join(', ');
+    document.getElementById('maxStreak').textContent = " " + maxStreak;
+    thoiGianKetThuc = new Date().getTime();
+    tongThoiGianDoan = (thoiGianKetThuc - thoiGianBatDau) / 1000;
+    document.getElementById('tongThoiGianDoan').textContent = tongThoiGianDoan.toFixed(2) + ' giây';
 }
 
-function hienThiKetThuc() {
-    const ketThucDiv = document.getElementById('ketThucDiv');
-    const lichSuSai = document.getElementById('lichSuSai');
-    ketThucDiv.style.display = 'block';
-    lichSuSai.style.display = 'block';
-    document.getElementById('maxStreak').textContent = `${maxStreak} câu`;
-    document.getElementById('soTuDoanDung').textContent = `${soTuDoanDung} câu`;
-    document.getElementById('tongThoiGian').textContent = `${(tongThoiGianDoan / 1000).toFixed(2)} giây`;
-    document.getElementById('soMangBanDau').textContent = `${new URLSearchParams(window.location.search).get('soMang')} mạng`;
-}
-
-function batDauLai() {
-    soMang = getSoMangFromURL();
-    soTuDoanDung = 0;
-    tongThoiGianDoan = 0;
-    lichSuSai = [];
-    document.getElementById('soMang').textContent = soMang;
-    document.getElementById('inputDoan').disabled = false;
-    document.getElementById('btnDoan').disabled = false;
-    document.getElementById('btnBoQua').disabled = false;
-    document.getElementById('inputDoan').value = '';
-    document.getElementById('message').textContent = '';
-    document.getElementById('ketThucDiv').style.display = 'none';
-    document.getElementById('lichSuSai').style.display = 'none';
-    capNhatLichSuSai();
-    chonTu();
-}
-
-document.getElementById('inputDoan').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        kiemTra();
-    }
-});
-document.getElementById('btnDoan').addEventListener('click', kiemTra);
-document.getElementById('btnBoQua').addEventListener('click', boQua);
-document.getElementById('btnHuyBo').addEventListener('click', () => {
-    document.getElementById('inputDoan').value = '';
-    document.getElementById('message').textContent = '';
-});
-document.getElementById('btnBatDauLai').addEventListener('click', batDauLai);
-document.getElementById('troVeTrangChu').addEventListener('click', function() {
-    window.location.href = 'TrangChu.html';
-});
-
-fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Mạng không ổn định');
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btnDoan').addEventListener('click', kiemTra);
+    document.getElementById('inputDoan').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            kiemTra();
+            document.getElementById('btnDoan').focus();
         }
-        return response.text();
-    })
-    .then(data => {
-        dsTu = data.trim().split('\n').map(tu => tu.trim());
-        thoiGianBatDau = Date.now();
-        chonTu();
-    })
-    .catch(error => {
-        console.error('Lỗi:', error);
     });
 
-import { loaiBoKyTuDacBiet } from './DoanTatCa.js';
-import { loaiBoTuHienTai } from './DoanTatCa.js';
-import { xaoTron } from './DoanTatCa.js';
-import { chonTu } from './DoanTatCa.js';
+    document.getElementById('btnBoQua').addEventListener('click', boQua);
+
+    document.getElementById('troVeTrangChu').addEventListener('click', function() {
+        window.location.href = 'TrangChu.html';
+    });
+
+    document.getElementById('choiLai').addEventListener('click', function() {
+        location.reload();
+    });
+
+    fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Mạng không ổn định');
+            }
+            return response.text();
+        })
+        .then(data => {
+            dsTu = data.trim().split('\n').map(tu => tu.trim());
+            console.log('Mảng dsTu ban đầu:', dsTu);
+            chonTu();
+        })
+        .catch(error => {
+            console.error('Đã xảy ra sự cố khi tìm nạp dữ liệu:', error);
+        });
+
+    thoiGianBatDau = new Date().getTime();
+});
