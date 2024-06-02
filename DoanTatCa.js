@@ -105,10 +105,7 @@ document.getElementById('inputDoan').addEventListener('keypress', function(event
 });
 document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('btnBoQua').addEventListener('click', boQua);
-const btnKetThuc = document.getElementById('btnKetThuc');
-if (btnKetThuc) {
-    btnKetThuc.addEventListener('click', hienThiKetThuc);
-}
+document.getElementById('btnKetThuc').addEventListener('click', hienThiKetThuc);
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
@@ -131,8 +128,3 @@ fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
     .catch(error => {
         console.error('Đã xảy ra sự cố khi tìm nạp dữ liệu:', error);
     });
-
-export { loaiBoKyTuDacBiet };
-export { loaiBoTuHienTai };
-export { xaoTron };
-export { chonTu };
