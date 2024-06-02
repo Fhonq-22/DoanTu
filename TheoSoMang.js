@@ -103,23 +103,6 @@ function hienThiKetThuc() {
     document.getElementById('soMangBanDau').textContent = `${new URLSearchParams(window.location.search).get('soMang')} mạng`;
 }
 
-function choiLai() {
-    soMang = getSoMangFromURL();
-    soTuDoanDung = 0;
-    tongThoiGianDoan = 0;
-    lichSuSai = [];
-    document.getElementById('soMang').textContent = soMang;
-    document.getElementById('inputDoan').disabled = false;
-    document.getElementById('btnDoan').disabled = false;
-    document.getElementById('btnBoQua').disabled = false;
-    document.getElementById('inputDoan').value = '';
-    document.getElementById('message').textContent = '';
-    document.getElementById('ketThucDiv').style.display = 'none';
-    document.getElementById('lichSuSai').style.display = 'none';
-    capNhatLichSuSai();
-    chonTu();
-}
-
 document.getElementById('inputDoan').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         kiemTra();
@@ -131,7 +114,9 @@ document.getElementById('btnHuyBo').addEventListener('click', () => {
     document.getElementById('inputDoan').value = '';
     document.getElementById('message').textContent = '';
 });
-document.getElementById('choiLai').addEventListener('click', choiLai);
+document.getElementById('choiLai').addEventListener('click', function() {
+    location.reload();
+});
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
