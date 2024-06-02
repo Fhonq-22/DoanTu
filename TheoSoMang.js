@@ -1,5 +1,3 @@
-import { loaiBoKyTuDacBiet, loaiBoTuHienTai, xaoTron, chonTu } from './DoanTatCa.js';
-
 let dsTu = [];
 let tuHienTai = '';
 let soMang = getSoMangFromURL();
@@ -16,6 +14,43 @@ function getSoMangFromURL() {
     const soMang = parseInt(urlParams.get('soMang'));
     document.getElementById('soMang').textContent = soMang;
     return soMang;
+}
+
+function loaiBoKyTuDacBiet(tu) {
+    return tu.replace(/[\n\r]/g, '');
+}
+
+function loaiBoTuHienTai() {
+    const index = dsTu.indexOf(tuHienTai);
+    if (index !== -1) {
+        dsTu.splice(index, 1);
+        console.log("Mảng dsTu sau khi loại bỏ '" + tuHienTai + "':", dsTu);
+    }
+}
+
+function xaoTron(word) {
+    let characters = word.split('');
+    for (let i = characters.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [characters[i], characters[j]] = [characters[j], characters[i]];
+    }
+    return characters.join('/');
+}
+
+function chonTu() {
+    if (dsTu.length === 0) {
+        document.getElementById('message').textContent = 'Bạn đã đoán hết tất cả các từ!';
+        document.getElementById('inputDoan').disabled = true;
+        document.getElementById('btnDoan').disabled = true;
+        document.getElementById('btnBoQua').disabled = true;
+        hienThiKetThuc();
+        return;
+    }
+    const index = Math.floor(Math.random() * dsTu.length);
+    tuHienTai = loaiBoKyTuDacBiet(dsTu[index]);
+    const tuXaoTron = xaoTron(tuHienTai.replace(/\s/g, ''));
+    document.getElementById('word').textContent = tuXaoTron;
+    console.log('Từ hiện tại đã được chọn:', tuHienTai);
 }
 
 function kiemTra() {
