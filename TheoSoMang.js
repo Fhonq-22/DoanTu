@@ -103,7 +103,7 @@ function hienThiKetThuc() {
     document.getElementById('soMangBanDau').textContent = `${new URLSearchParams(window.location.search).get('soMang')} mạng`;
 }
 
-function batDauLai() {
+function choiLai() {
     soMang = getSoMangFromURL();
     soTuDoanDung = 0;
     tongThoiGianDoan = 0;
@@ -131,7 +131,7 @@ document.getElementById('btnHuyBo').addEventListener('click', () => {
     document.getElementById('inputDoan').value = '';
     document.getElementById('message').textContent = '';
 });
-document.getElementById('btnBatDauLai').addEventListener('click', batDauLai);
+document.getElementById('choiLai').addEventListener('click', choiLai);
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
