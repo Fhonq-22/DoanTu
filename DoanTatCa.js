@@ -31,6 +31,7 @@ function chonTu() {
         document.getElementById('inputDoan').disabled = true;
         document.getElementById('btnDoan').disabled = true;
         document.getElementById('btnBoQua').disabled = true;
+        hienThiKetThuc();
         return;
     }
     const index = Math.floor(Math.random() * dsTu.length);
@@ -96,21 +97,18 @@ function hienThiKetThuc() {
     document.getElementById('inputDoan').disabled = true;
 }
 
-document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('inputDoan').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         kiemTra();
         document.getElementById('btnDoan').focus();
     }
 });
-
+document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('btnBoQua').addEventListener('click', boQua);
 document.getElementById('btnKetThuc').addEventListener('click', hienThiKetThuc);
-
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
-
 document.getElementById('choiLai').addEventListener('click', function() {
     location.reload();
 });
@@ -133,6 +131,5 @@ fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
 
 export { loaiBoKyTuDacBiet };
 export { loaiBoTuHienTai };
-export { chonTu };
 export { xaoTron };
-export { kiemTra };
+export { chonTu };
