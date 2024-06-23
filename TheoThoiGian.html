@@ -1,24 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đoán từ theo thời gian</title>
+    <title>Đoán Theo Thời Gian</title>
     <link rel="stylesheet" href="TheoThoiGian.css">
+    <link rel="stylesheet" href="libs/uicons-solid-rounded.css">
 </head>
 <body>
     <div class="container">
-        <h1>Đoán từ theo thời gian</h1>
-        <div class="word-container">
-            <span id="word"></span>
+        <h1>Đoán Theo Thời Gian</h1>
+        <div id="timeConLai">Thời gian còn lại: 0 giây</div>
+        <div id="word"></div>
+        <input type="text" id="inputDoan" placeholder="Nhập từ bạn đoán">
+        <button id="btnDoan">
+            <i class="fi fi-sr-search"></i> Đoán
+        </button>
+        <button id="btnBoQua">
+            <i class="fi fi-sr-step-forward"></i> Bỏ qua
+        </button>
+        <button id="btnHuyBo">
+            <i class="fi fi-sr-circle-x"></i> Hủy bỏ
+        </button>
+        <p id="message"></p>
+
+        <div class="end-game-container" style="display: none;">
+            <div id="ketThucDiv" class="ket-thuc">
+                <h2>Kết thúc trò chơi</h2>
+                <p>
+                    <i class="fi fi-sr-flame"></i>: <span id="maxStreak">0</span>
+                </p>
+                <p>
+                    <i class="fi fi-sr-check"></i>: <span id="soTuDoanDung">0</span>
+                </p>
+                <p>
+                    <i class="fi fi-sr-clock"></i>: <span id="tongThoiGian">0 giây</span>
+                </p>
+                <p>
+                    <i class="fi fi-sr-step-forward"></i>: <span id="soLanBoQua">0 lần</span>
+                </p>
+                <button id="chiaSeThanhTich">
+                    <i class="fi fi-sr-share"></i> Share
+                </button>
+            </div>
+            <div id="lichSuSai" class="lich-su-sai">
+                <h2>Các từ đoán sai</h2>
+                <ul id="danhSachSai"></ul>
+            </div>
         </div>
 
-        <input id="inputDoan" type="text" placeholder="Nhập từ đoán của bạn">
-        <button id="btnDoan">Đoán</button>
-        <p id="message"></p>
-        <p id="timeConLai"></p>
+        <div class="action-buttons">
+            <button id="troVeTrangChu">
+                <i class="fi fi-sr-home"></i> Trang chủ
+            </button>
+            <button id="choiLai">
+                <i class="fi fi-sr-rotate-square"></i> Chơi lại
+            </button>
+        </div>
     </div>
 
-    <script type="module" src="TheoThoiGian.js"></script>
+    <script src="TheoThoiGian.js"></script>
 </body>
 </html>
