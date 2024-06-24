@@ -164,16 +164,27 @@ function boQua() {
 }
 
 function chiaSeThanhTich() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const streak = urlParams.get('streak') || maxStreak;
-    const right = urlParams.get('right') || soTuDoanDung;
-    const time = urlParams.get('time') || (tongThoiGianDoan / 1000).toFixed(2);
-    const skip = urlParams.get('skip') || soLanBoQua;
+    const streak = maxStreak;
+    const right = soTuDoanDung;
+    const time = (tongThoiGianDoan / 1000).toFixed(2);
+    const skip = soLanBoQua;
+    const wrong = new Set(lichSuSai).size;
+
+    const data = {
+        type: 'time',
+        streak: streak,
+        right: right,
+        wrong: wrong,
+        time: time,
+        skip: skip
+    };
+
+    const encodedData = encodeBase64(JSON.stringify(data));
 
     const shareData = {
-        title: 'Thành tích của tôi trong Đoán từ',
-        text: `Tôi đã đoán được ${right} câu đúng và thời gian chơi là ${time} giây!`,
-        url: `${window.location.origin}/DoanTu/ThanhTich?loai=theothoigian&streak=${streak}&right=${right}&time=${time}&skip=${skip}`
+        title: 'Thành tích Đoán từ theo thời gian',
+        text: `Xem thành tích của tôi tại:`,
+        url: `${window.location.origin}/DoanTu/ThanhTich.html?data=${encodedData}`
     };
 
     navigator.share(shareData)
@@ -181,20 +192,9 @@ function chiaSeThanhTich() {
         .catch((error) => console.error('Lỗi khi chia sẻ:', error));
 }
 
-fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Mạng không ổn định');
-        }
-        return response.text();
-    })
-    .then(data => {
-        dsTu = data.trim().split('\n').map(tu => tu.trim());
-        batDauDoanTheoThoiGian();
-    })
-    .catch(error => {
-        console.error('Đã xảy ra sự cố khi tìm nạp dữ liệu:', error);
-    });
+function encodeBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
 
 document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('inputDoan').addEventListener('keypress', function(event) {
@@ -214,3 +214,18 @@ document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
 document.getElementById('chiaSeThanhTich').addEventListener('click', chiaSeThanhTich);
+
+fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Mạng không ổn định');
+        }
+        return response.text();
+    })
+    .then(data => {
+        dsTu = data.trim().split('\n').map(tu => tu.trim());
+        batDauDoanTheoThoiGian();
+    })
+    .catch(error => {
+        console.error('Đã xảy ra sự cố khi tìm nạp dữ liệu:', error);
+    });
