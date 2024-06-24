@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
+}
+
+.container {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(to bottom right, #ffb6c1, #add8e6);
+    padding: 20px;
+    border-radius: 40px;
+}
+
+.thanhTich {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.thanhTich > div {
+    width: calc(33.33% - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.5em;
+    position: relative;
+}
+
+.streak {
+    background-color: #FFF8DC;
+    color: #DAA520;
+}
+
+.right {
+    background-color: #98FB98;
+    color: #32CD32;
+}
+
+.wrong {
+    background-color: #FFB6C1;
+    color: #FF0000;
+}
+
+.accuracy {
+    background-color: #FFFFE0;
+    color: #FFD700;
+}
+
+.time {
+    background-color: #E6E6FA;
+    color: #9370DB;
+}
+
+.skip {
+    background-color: #FFDAB9;
+    color: #FF8C00;
+}
+
+.thanhTich > div i {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.star-icon {
+    color: white;
+    text-shadow: 0 0 10px #FFD700,
+                 0 0 20px #FFD700,
+                  0 0 30px #FFD700,
+                   0 0 40px #FFA500,
+                    0 0 70px #FFA500,
+                     0 0 80px #FFA500,
+                      0 0 100px #FFA500;
+    position: absolute;
+    animation: rotateAndFade 2s forwards;
+}
+
+@keyframes rotateAndFade {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(360deg);
+    }
+}
