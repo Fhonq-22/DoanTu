@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Chủ</title>
+    <link rel="stylesheet" href="libs/uicons-solid-rounded.css">
     <link rel="stylesheet" href="TrangChu.css">
 </head>
 <body>
     <div class="container">
         <h1>Trang Chủ</h1>
         <div id="buttons">
-            <button id="btnSoMang" onclick="hienThiChonSoMang()">Đoán theo số mạng</button>
-            <button id="btnThoiGian" onclick="hienThiChonThoiGian()">Đoán theo thời gian</button>
-            <button onclick="chuyenDenDoanTatCa()">Đoán tất cả</button>
+            <button id="btnSoMang" onclick="hienThiChonSoMang()">
+                <span class="fi-sr-heart"></span> Đoán theo số mạng
+            </button>
+            <button id="btnThoiGian" onclick="hienThiChonThoiGian()">
+                <span class="fi-sr-clock"></span> Đoán theo thời gian
+            </button>
+            <button onclick="chuyenDenDoanTatCa()">
+                <span class="fi-sr-globe"></span> Đoán tất cả
+            </button>
         </div>
         <div id="chonSoMang" class="option" style="display: none;">
             <label for="soMang">Chọn số mạng:</label>
