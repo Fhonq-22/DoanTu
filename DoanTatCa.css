@@ -185,3 +185,23 @@ button:focus {
 #choiLai:focus {
     background-color: #add8e6;
 }
+
+button#chiaSeThanhTich {
+    background-color: #a8dadc;
+    color: #1d3557;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button#chiaSeThanhTich:hover {
+    background-color: #f1faee;
+    color: #1d3557;
+}
