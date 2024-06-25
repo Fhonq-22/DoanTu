@@ -166,9 +166,9 @@ function boQua() {
 function chiaSeThanhTich() {
     const streak = maxStreak;
     const right = soTuDoanDung;
+    const wrong = new Set(lichSuSai).size;
     const time = (tongThoiGianDoan / 1000).toFixed(2);
     const skip = soLanBoQua;
-    const wrong = new Set(lichSuSai).size;
 
     const data = {
         type: 'time',
