@@ -1,8 +1,13 @@
 let dsTu = [];
 let tuHienTai = '';
-let soLuotBoQua = 5;
+let soLanBoQua = 5;
 let maxStreak = 0;
 let maxStreak_unit = 0;
+let soTuDoanDung = 0;
+let soLanDoanSai = 0;
+let tongThoiGianDoan = 0;
+let batDauThoiGian = Date.now();
+let daDoanLanDau = false;
 
 function loaiBoKyTuDacBiet(tu) {
     return tu.replace(/[\n\r]/g, '');
@@ -43,8 +48,17 @@ function chonTu() {
 
 function kiemTra() {
     const doan = document.getElementById('inputDoan').value.trim();
+    tongThoiGianDoan += Date.now() - batDauThoiGian;
+    batDauThoiGian = Date.now();
+
+    if (!daDoanLanDau) {
+        document.getElementById('btnKetThuc').disabled = false;
+        daDoanLanDau = true;
+    }
+
     if (doan === tuHienTai) {
         maxStreak_unit++;
+        soTuDoanDung++;
         if (maxStreak_unit > maxStreak) {
             maxStreak = maxStreak_unit;
         }
@@ -60,6 +74,7 @@ function kiemTra() {
             maxStreak = maxStreak_unit;
         }
         maxStreak_unit = 0;
+        soLanDoanSai++;
 
         document.getElementById('message').textContent = 'Sai rồi, hãy thử lại!';
         document.getElementById('message').classList.remove('message-correct');
@@ -69,13 +84,13 @@ function kiemTra() {
 }
 
 function boQua() {
-    if (soLuotBoQua > 0) {
-        soLuotBoQua--;
-        document.getElementById('boQuaCount').textContent = soLuotBoQua;
+    if (soLanBoQua > 0) {
+        soLanBoQua--;
+        document.getElementById('boQuaCount').textContent = soLanBoQua;
         document.getElementById('message').textContent = `Đáp án: ${tuHienTai}`;
         document.getElementById('message').classList.remove('message-incorrect', 'message-correct');
 
-        if (soLuotBoQua === 0) {
+        if (soLanBoQua === 0) {
             document.getElementById('btnBoQua').disabled = true;
             document.getElementById('boQuaCount').textContent = 'Hết';
         }
@@ -88,6 +103,7 @@ function boQua() {
 }
 
 function hienThiKetThuc() {
+    document.getElementById('message').textContent = '';
     document.getElementById('ketThucDiv').style.display = 'block';
     document.getElementById('maxStreak').textContent = " " + maxStreak;
 
@@ -95,6 +111,39 @@ function hienThiKetThuc() {
     document.getElementById('btnBoQua').disabled = true;
     document.getElementById('btnKetThuc').disabled = true;
     document.getElementById('inputDoan').disabled = true;
+}
+
+function chiaSeThanhTich() {
+    const streak = maxStreak;
+    const right = soTuDoanDung;
+    const wrong = soLanDoanSai;
+    const time = (tongThoiGianDoan / 1000).toFixed(2);
+    const skip = 5 - soLanBoQua;
+
+    const data = {
+        type: 'all',
+        streak: streak,
+        right: right,
+        wrong: wrong,
+        time: time,
+        skip: skip
+    };
+
+    const encodedData = encodeBase64(JSON.stringify(data));
+
+    const shareData = {
+        title: 'Thành tích Đoán từ theo số mạng',
+        text: `Xem thành tích của tôi tại:`,
+        url: `${window.location.origin}/DoanTu/ThanhTich.html?data=${encodedData}`
+    };
+
+    navigator.share(shareData)
+        .then(() => console.log('Chia sẻ thành công!'))
+        .catch((error) => console.error('Lỗi khi chia sẻ:', error));
+}
+
+function encodeBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
 }
 
 document.getElementById('inputDoan').addEventListener('keypress', function(event) {
@@ -106,12 +155,14 @@ document.getElementById('inputDoan').addEventListener('keypress', function(event
 document.getElementById('btnDoan').addEventListener('click', kiemTra);
 document.getElementById('btnBoQua').addEventListener('click', boQua);
 document.getElementById('btnKetThuc').addEventListener('click', hienThiKetThuc);
+document.getElementById('btnKetThuc').disabled = true;
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
 document.getElementById('choiLai').addEventListener('click', function() {
     location.reload();
 });
+document.getElementById('chiaSeThanhTich').addEventListener('click', chiaSeThanhTich);
 
 fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
     .then(response => {
