@@ -8,6 +8,7 @@ let maxStreak_unit = 0;
 let tongThoiGianDoan = 0;
 let thoiGianBatDau = 0;
 let thoiGianKetThuc = 0;
+let soLanBoQua = 0;
 
 function getSoMangFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -50,7 +51,6 @@ function chonTu() {
     tuHienTai = loaiBoKyTuDacBiet(dsTu[index]);
     const tuXaoTron = xaoTron(tuHienTai.replace(/\s/g, ''));
     document.getElementById('word').textContent = tuXaoTron;
-    console.log('Từ hiện tại đã được chọn:', tuHienTai);
 }
 
 function kiemTra() {
@@ -89,6 +89,7 @@ function boQua() {
     soMang--;
     document.getElementById('soMang').textContent = soMang;
     lichSuSai.push(tuHienTai);
+    soLanBoQua++;
     if (soMang === 0) {
         ketThucTroChoi();
     } else {
@@ -138,6 +139,39 @@ function hienThiKetThuc() {
     document.getElementById('soMangBanDau').textContent = `${new URLSearchParams(window.location.search).get('soMang')} mạng`;
 }
 
+function chiaSeThanhTich() {
+    const streak = maxStreak;
+    const right = soTuDoanDung;
+    const wrong = lichSuSai.length - soLanBoQua;
+    const time = (tongThoiGianDoan / 1000).toFixed(2);
+    const skip = soLanBoQua;
+
+    const data = {
+        type: 'heart',
+        streak: streak,
+        right: right,
+        wrong: wrong,
+        time: time,
+        skip: skip
+    };
+
+    const encodedData = encodeBase64(JSON.stringify(data));
+
+    const shareData = {
+        title: 'Thành tích Đoán từ theo số mạng',
+        text: `Xem thành tích của tôi tại:`,
+        url: `${window.location.origin}/DoanTu/ThanhTich.html?data=${encodedData}`
+    };
+
+    navigator.share(shareData)
+        .then(() => console.log('Chia sẻ thành công!'))
+        .catch((error) => console.error('Lỗi khi chia sẻ:', error));
+}
+
+function encodeBase64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+
 document.getElementById('inputDoan').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         kiemTra();
@@ -155,6 +189,7 @@ document.getElementById('choiLai').addEventListener('click', function() {
 document.getElementById('troVeTrangChu').addEventListener('click', function() {
     window.location.href = 'TrangChu.html';
 });
+document.getElementById('chiaSeThanhTich').addEventListener('click', chiaSeThanhTich);
 
 fetch('https://raw.githubusercontent.com/Fhonq-22/DoanTu/main/Data.txt')
     .then(response => {
