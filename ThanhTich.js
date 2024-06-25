@@ -29,8 +29,6 @@ function getSkip() {
     return data.skip;
 }
 
-
-
 function hienThiThanhTich(type) {
     document.getElementById('maxStreak').textContent = getStreak() + " câu";
     document.getElementById('soTuDoanDung').textContent = getRight() + " câu";
@@ -45,6 +43,7 @@ function hienThiThanhTich(type) {
             break;
         case 'heart':
             document.getElementById('type').textContent = 'Theo số mạng';
+            document.getElementById('tiLeDoanDung').textContent = (getRight()/(getRight()+getWrong()+getSkip())*100).toFixed(0) + ' %';
             break;
         case 'all':
             document.getElementById('type').textContent = 'Theo tất cả';
