@@ -35,7 +35,7 @@ function hienThiThanhTich(type) {
     document.getElementById('maxStreak').textContent = getStreak() + " câu";
     document.getElementById('soTuDoanDung').textContent = getRight() + " câu";
     document.getElementById('soTuDoanSai').textContent = getWrong() + " câu";
-    document.getElementById('tiLeDoanDung').textContent = (getRight()/(getRight()+getWrong())*100).toFixed(0) + '%';
+    document.getElementById('tiLeDoanDung').textContent = (getRight()/(getRight()+getWrong())*100).toFixed(0) + ' %';
     document.getElementById('tongThoiGian').textContent = getTime() + " giây";
     document.getElementById('soLanBoQua').textContent = getSkip() + " lần";
     switch (type) {
@@ -62,7 +62,7 @@ function themIconNgauNhien() {
 
     const starIcon = document.createElement('i');
     starIcon.classList.add('fi', 'fi-sr-star', 'star-icon');
-    starIcon.style.fontSize = '0.7em';
+    starIcon.style.fontSize = '0.5em';
 
     const divWidth = randomDiv.offsetWidth;
     const divHeight = randomDiv.offsetHeight;
