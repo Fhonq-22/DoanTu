@@ -33,3 +33,7 @@ function chuyenDenTheoThoiGian() {
 function chuyenDenDoanTatCa() {
     window.location.href = 'DoanTatCa.html';
 }
+
+function chuyenDenDoanTatCaMVC() {
+    window.location.href = 'DoanTatCaMVC.html';
+}
