@@ -1,4 +1,4 @@
-import { layDanhSachTu2AmTiet } from "../Controllers/Tu2AmTietController.js";
+import { layDanhSachTu2AmTiet, layTu2AmTiet } from "../Controllers/Tu2AmTietController.js";
 
 let dsTu = [];
 let tuHienTai = '';
@@ -17,18 +17,15 @@ function loaiBoKyTuDacBiet(tu) {
 
 function loaiBoTuHienTai() {
     const index = dsTu.indexOf(tuHienTai);
-    if (index !== -1) {
-        dsTu.splice(index, 1);
-    }
+    if (index !== -1) dsTu.splice(index, 1);
 }
 
 function xaoTron(word) {
-    let characters = word.split('');
-    for (let i = characters.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [characters[i], characters[j]] = [characters[j], characters[i]];
-    }
-    return characters.join('/');
+    return word
+        .replace(/\s/g, '')
+        .split('')
+        .sort(() => Math.random() - 0.5)
+        .join('/');
 }
 
 function chonTu() {
@@ -42,8 +39,8 @@ function chonTu() {
     }
 
     const index = Math.floor(Math.random() * dsTu.length);
-    tuHienTai = loaiBoKyTuDacBiet(dsTu[index]);
-    const tuXaoTron = xaoTron(tuHienTai.replace(/\s/g, ''));
+    tuHienTai = dsTu[index];
+    const tuXaoTron = xaoTron(tuHienTai);
     document.getElementById('word').textContent = tuXaoTron;
 }
 
@@ -61,9 +58,7 @@ function kiemTra() {
         maxStreak_unit++;
         soTuDoanDung++;
 
-        if (maxStreak_unit > maxStreak) {
-            maxStreak = maxStreak_unit;
-        }
+        if (maxStreak_unit > maxStreak) maxStreak = maxStreak_unit;
 
         document.getElementById('message').textContent = 'Chính xác!';
         document.getElementById('message').className = 'message-correct';
@@ -72,9 +67,7 @@ function kiemTra() {
         loaiBoTuHienTai();
         chonTu();
     } else {
-        if (maxStreak_unit > maxStreak) {
-            maxStreak = maxStreak_unit;
-        }
+        if (maxStreak_unit > maxStreak) maxStreak = maxStreak_unit;
 
         maxStreak_unit = 0;
         soLanDoanSai++;
@@ -161,9 +154,23 @@ function bindEvents() {
 async function init() {
     bindEvents();
 
-    const data = await layDanhSachTu2AmTiet();
+    const keys = await layDanhSachTu2AmTiet();
 
-    dsTu = data || [];
+    const allWords = [];
+
+    for (const key of keys) {
+        const obj = await layTu2AmTiet(key);
+        if (!obj || !obj.danhSachAmTietCuoi) continue;
+
+        const list = obj.danhSachAmTietCuoi
+            .split(",")
+            .map(x => x.trim())
+            .filter(Boolean);
+
+        allWords.push(key, ...list);
+    }
+
+    dsTu = allWords;
     chonTu();
 }
 
