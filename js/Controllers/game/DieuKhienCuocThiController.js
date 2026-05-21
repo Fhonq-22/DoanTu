@@ -1,6 +1,7 @@
 import {
     layTuNgauNhien
-} from "../data/Tu2AmTietController.js";
+}
+from "../data/Tu2AmTietController.js";
 
 export default class DieuKhienCuocThiController {
 
@@ -18,9 +19,13 @@ export default class DieuKhienCuocThiController {
 
         this.answer = word;
 
+        const length =
+            word.length;
+
         return {
             answer: word,
-            shuffled: this.shuffle(word)
+            shuffled: this.shuffle(word),
+            length: length
         };
     }
 

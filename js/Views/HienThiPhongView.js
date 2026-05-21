@@ -6,20 +6,45 @@ const roomId =
         .get("room");
 
 const lastScores = {};
-
 const scoreEffects = {};
 
 listenPhong(roomId, (data) => {
 
     if (!data) return;
 
-    document.getElementById("word").textContent =
-        data["Từ hiện tại"] || "";
+    const answer =
+        data["Đáp án"] || "";
 
-    document.getElementById("answer").textContent =
-        data["Hiển thị đáp án"]
-            ? data["Đáp án"]
-            : "";
+    const opened =
+        data["Ký tự mở khóa"] || [];
+
+    const answerEl =
+        document.getElementById("answer");
+
+    if (answerEl) {
+
+        let display = "";
+
+        for (let i = 0; i < answer.length; i++) {
+
+            if (answer[i] === " ") {
+
+                display += " ";
+                continue;
+            }
+
+            if (opened.includes(i)) {
+
+                display += answer[i];
+
+            } else {
+
+                display += "_";
+            }
+        }
+
+        answerEl.textContent = display;
+    }
 
     const playersDiv =
         document.getElementById("players");
@@ -31,39 +56,29 @@ listenPhong(roomId, (data) => {
 
     const sortedPlayers =
         Object.entries(players)
-            .sort(
-                (a, b) =>
-                    (b[1]["Điểm"] ?? 0)
-                    - (a[1]["Điểm"] ?? 0)
+            .sort((a, b) =>
+                (b[1]["Điểm"] ?? 0) - (a[1]["Điểm"] ?? 0)
             );
 
     let currentRank = 0;
-
     let previousScore = null;
 
-    sortedPlayers.forEach(
-        ([name, player], index) => {
+    sortedPlayers.forEach(([name, player], index) => {
 
         const currentScore =
             player["Điểm"] ?? 0;
 
-        if (
-            previousScore === null
-            || currentScore < previousScore
-        ) {
+        if (previousScore === null || currentScore < previousScore) {
+
             currentRank = index + 1;
         }
 
-        previousScore =
-            currentScore;
+        previousScore = currentScore;
 
-        if (
-            lastScores[name] !== undefined
-        ) {
+        if (lastScores[name] !== undefined) {
 
             const diff =
-                currentScore -
-                lastScores[name];
+                currentScore - lastScores[name];
 
             if (diff !== 0) {
 
@@ -76,60 +91,38 @@ listenPhong(roomId, (data) => {
 
                     delete scoreEffects[name];
 
-                    const effect =
+                    const el =
                         document.querySelector(
                             `[data-effect="${name}"]`
                         );
 
-                    if (effect) {
-                        effect.textContent = "";
+                    if (el) {
+
+                        el.textContent = "";
                     }
 
                 }, 3000);
             }
         }
 
-        lastScores[name] =
-            currentScore;
+        lastScores[name] = currentScore;
 
         let rankText = "";
 
-        if (currentRank === 1) {
-
-            rankText = "🥇";
-
-        } else if (
-            currentRank === 2
-        ) {
-
-            rankText = "🥈";
-
-        } else if (
-            currentRank === 3
-        ) {
-
-            rankText = "🥉";
-
-        } else {
-
-            rankText =
-                `#${currentRank}`;
-        }
+        if (currentRank === 1) rankText = "🥇";
+        else if (currentRank === 2) rankText = "🥈";
+        else if (currentRank === 3) rankText = "🥉";
+        else rankText = `#${currentRank}`;
 
         const div =
             document.createElement("div");
 
         div.innerHTML = `
             <span>
-                ${rankText}
-                ${name}
-                :
-                ${currentScore}
+                ${rankText} ${name}: ${currentScore}
             </span>
 
-            <span
-                data-effect="${name}"
-            >
+            <span data-effect="${name}">
                 ${scoreEffects[name] || ""}
             </span>
         `;

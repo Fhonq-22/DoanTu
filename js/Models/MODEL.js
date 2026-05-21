@@ -63,7 +63,8 @@ export class PhongThi {
         TuHienTai = "",
         DapAn = "",
         HienThiDapAn = false,
-        DanhSachNguoiChoi = {}
+        DanhSachNguoiChoi = {},
+        KyTuMoKhoa = []
     ) {
         this.MaPhong = MaPhong;
 
@@ -74,6 +75,8 @@ export class PhongThi {
         this.HienThiDapAn = HienThiDapAn;
 
         this.DanhSachNguoiChoi = DanhSachNguoiChoi;
+
+        this.KyTuMoKhoa = KyTuMoKhoa;
     }
 
     toJSON() {
@@ -81,6 +84,7 @@ export class PhongThi {
             "Từ hiện tại": this.TuHienTai,
             "Đáp án": this.DapAn,
             "Hiển thị đáp án": this.HienThiDapAn,
+            "Ký tự mở khóa": this.KyTuMoKhoa,
             "Danh sách người chơi": this.DanhSachNguoiChoi
         };
     }
