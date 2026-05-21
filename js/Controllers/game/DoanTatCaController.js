@@ -1,6 +1,9 @@
+import {
+    layTuNgauNhien
+} from "../data/Tu2AmTietController.js";
+
 export default class DoanTatCaController {
     constructor() {
-        this.dsTu = [];
         this.tuHienTai = "";
 
         this.soLanBoQua = 5;
@@ -14,18 +17,14 @@ export default class DoanTatCaController {
         this.startTime = Date.now();
     }
 
-    init(dsTu) {
-        this.dsTu = (dsTu || []).filter(x => x && x !== ".");
-        return this.chonTu();
-    }
+    async chonTu() {
+        const word = await layTuNgauNhien();
 
-    chonTu() {
-        if (!this.dsTu || this.dsTu.length === 0) return "";
+        if (!word) return null;
 
-        const index = Math.floor(Math.random() * this.dsTu.length);
-        this.tuHienTai = this.dsTu[index] || "";
+        this.tuHienTai = word;
 
-        return this.shuffle(this.tuHienTai);
+        return this.shuffle(word);
     }
 
     shuffle(word) {
@@ -34,49 +33,49 @@ export default class DoanTatCaController {
         return word
             .replace(/\s/g, "")
             .split("")
+            .filter(Boolean)
             .sort(() => Math.random() - 0.5)
             .join("/");
     }
 
-    kiemTra(input) {
-        this.startTime = Date.now();
+    async kiemTra(input) {
+        const now = Date.now();
+        this.startTime = now;
 
         if (input === this.tuHienTai) {
             this.streak++;
             this.soDung++;
 
-            this.maxStreak = Math.max(this.maxStreak, this.streak);
-
-            this.removeWord();
+            this.maxStreak = Math.max(
+                this.maxStreak,
+                this.streak
+            );
 
             return {
                 correct: true,
-                next: this.chonTu()
+                next: await this.chonTu()
             };
         }
 
         this.streak = 0;
         this.soSai++;
 
-        return { correct: false };
-    }
-
-    boQua() {
-        if (this.soLanBoQua <= 0) return null;
-
-        this.soLanBoQua--;
-
-        const answer = this.tuHienTai;
-
         return {
-            answer,
-            next: this.chonTu()
+            correct: false
         };
     }
 
-    removeWord() {
-        const i = this.dsTu.indexOf(this.tuHienTai);
-        if (i !== -1) this.dsTu.splice(i, 1);
+    async boQua() {
+        if (this.soLanBoQua <= 0) {
+            return null;
+        }
+
+        this.soLanBoQua--;
+
+        return {
+            answer: this.tuHienTai,
+            next: await this.chonTu()
+        };
     }
 
     getState() {

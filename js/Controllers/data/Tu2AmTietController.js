@@ -22,6 +22,35 @@ export async function layDanhSachTu2AmTiet() {
     return data ? Object.keys(data) : [];
 }
 
+export async function layTuNgauNhien() {
+    const data = await getData("Từ 2 âm tiết");
+
+    if (!data) return null;
+
+    const keys = Object.keys(data);
+
+    const key =
+        keys[Math.floor(Math.random() * keys.length)];
+
+    const value = data[key];
+
+    if (!value || value === ".") {
+        return key;
+    }
+
+    const list = value
+        .split(",")
+        .map(x => x.trim())
+        .filter(x => x && x !== ".");
+
+    if (list.length === 0) return key;
+
+    const last =
+        list[Math.floor(Math.random() * list.length)];
+
+    return `${key} ${last}`;
+}
+
 export async function themAmTietCuoi(tuGoc, amTietMoi = []) {
     const current = await getData("Từ 2 âm tiết", tuGoc);
 
