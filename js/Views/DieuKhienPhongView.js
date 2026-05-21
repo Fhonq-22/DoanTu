@@ -4,7 +4,8 @@ import {
     themNguoiChoi,
     capNhatDiem,
     listenPhong
-} from "../Controllers/data/PhongThiController.js";
+}
+from "../Controllers/data/PhongThiController.js";
 
 import DieuKhienCuocThiController
 from "../Controllers/game/DieuKhienCuocThiController.js";
@@ -13,22 +14,18 @@ const controller =
     new DieuKhienCuocThiController();
 
 const roomId =
-    new URLSearchParams(
-        location.search
-    ).get("room");
+    new URLSearchParams(location.search)
+        .get("room");
 
-document.getElementById(
-    "btnNext"
-).onclick = async () => {
+document.getElementById("btnNext").onclick =
+    async () => {
 
     const data =
         await controller.taoTuMoi();
 
     if (!data) return;
 
-    document.getElementById(
-        "answer"
-    ).textContent =
+    document.getElementById("answer").textContent =
         data.answer;
 
     await capNhatTu(
@@ -38,16 +35,14 @@ document.getElementById(
     );
 };
 
-document.getElementById(
-    "btnShow"
-).onclick = async () => {
+document.getElementById("btnShow").onclick =
+    async () => {
 
     await hienDapAn(roomId);
 };
 
-document.getElementById(
-    "btnAddPlayer"
-).onclick = async () => {
+document.getElementById("btnAddPlayer").onclick =
+    async () => {
 
     const name =
         document
@@ -57,14 +52,10 @@ document.getElementById(
 
     if (!name) return;
 
-    await themNguoiChoi(
-        roomId,
-        name
-    );
+    await themNguoiChoi(roomId, name);
 
-    document.getElementById(
-        "playerName"
-    ).value = "";
+    document.getElementById("playerName").value =
+        "";
 };
 
 listenPhong(roomId, async (data) => {
@@ -72,14 +63,12 @@ listenPhong(roomId, async (data) => {
     if (!data) return;
 
     const playersDiv =
-        document.getElementById(
-            "players"
-        );
+        document.getElementById("players");
 
     playersDiv.innerHTML = "";
 
     const players =
-        data.players || {};
+        data["Danh sách người chơi"] || {};
 
     for (const name in players) {
 
@@ -87,14 +76,14 @@ listenPhong(roomId, async (data) => {
             document.createElement("div");
 
         const score =
-            players[name].score;
+            players[name]["Điểm"];
 
         div.innerHTML = `
             <span>
                 ${name}: ${score}
             </span>
 
-            <button data-name="${name}">
+            <button data-plus="${name}">
                 +
             </button>
 
@@ -107,16 +96,16 @@ listenPhong(roomId, async (data) => {
     }
 
     document
-        .querySelectorAll("[data-name]")
+        .querySelectorAll("[data-plus]")
         .forEach(btn => {
 
         btn.onclick = async () => {
 
             const name =
-                btn.dataset.name;
+                btn.dataset.plus;
 
             const current =
-                players[name].score;
+                players[name]["Điểm"];
 
             await capNhatDiem(
                 roomId,
@@ -136,7 +125,7 @@ listenPhong(roomId, async (data) => {
                 btn.dataset.minus;
 
             const current =
-                players[name].score;
+                players[name]["Điểm"];
 
             await capNhatDiem(
                 roomId,
