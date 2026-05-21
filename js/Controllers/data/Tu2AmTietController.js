@@ -2,9 +2,9 @@ import {
     addData,
     getData,
     deleteData
-} from "../Models/firebase-CRUD.js";
+} from "../../Models/firebase-CRUD.js";
 
-import { Tu2AmTiet } from "../Models/MODEL.js";
+import { Tu2AmTiet } from "../../Models/MODEL.js";
 
 export async function themTu2AmTiet(tuGoc, danhSachAmTietCuoi = []) {
     const data = new Tu2AmTiet(tuGoc, danhSachAmTietCuoi.join(", "));
