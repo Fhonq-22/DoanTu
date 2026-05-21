@@ -58,7 +58,6 @@ async function init() {
     bindEvents();
 
     const keys = await layDanhSachTu2AmTiet();
-    console.log("key: "+ keys);
 
     let dsTu = [];
 
@@ -83,6 +82,7 @@ async function init() {
     console.log("DS TU FINAL:", dsTu.length);
 
     const first = controller.init(dsTu);
+    console.log("FIRST =", first);
 
     if (!first) {
         document.getElementById("word").textContent = "No word";
@@ -93,4 +93,3 @@ async function init() {
 }
 
 init();
-console.log("load file view ok");
