@@ -7,7 +7,7 @@ import {
 const controller = new DoanTatCaController();
 
 function render(word) {
-    document.getElementById("word").textContent = word;
+    document.getElementById("word").textContent = word || "";
 }
 
 function bindEvents() {
@@ -59,7 +59,7 @@ async function init() {
 
     const keys = await layDanhSachTu2AmTiet();
 
-    const dsTu = [];
+    let dsTu = [];
 
     for (const k of keys) {
         const obj = await layTu2AmTiet(k);
@@ -69,12 +69,25 @@ async function init() {
         const list = obj.DanhSachAmTietCuoi
             .split(",")
             .map(x => x.trim())
-            .filter(Boolean);
+            .filter(x => x && x !== ".");
 
-        dsTu.push(k, ...list);
+        if (list.length > 0) {
+            dsTu.push(k, ...list);
+        }
     }
 
+    // lọc lần cuối cho chắc
+    dsTu = dsTu.filter(x => x && x !== ".");
+
+    console.log("DS TU FINAL:", dsTu.length);
+
     const first = controller.init(dsTu);
+
+    if (!first) {
+        document.getElementById("word").textContent = "No word";
+        return;
+    }
+
     render(first);
 }
 

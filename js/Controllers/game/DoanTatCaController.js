@@ -15,20 +15,22 @@ export default class DoanTatCaController {
     }
 
     init(dsTu) {
-        this.dsTu = dsTu;
+        this.dsTu = (dsTu || []).filter(x => x && x !== ".");
         return this.chonTu();
     }
 
     chonTu() {
-        if (this.dsTu.length === 0) return null;
+        if (!this.dsTu || this.dsTu.length === 0) return "";
 
         const index = Math.floor(Math.random() * this.dsTu.length);
-        this.tuHienTai = this.dsTu[index];
+        this.tuHienTai = this.dsTu[index] || "";
 
         return this.shuffle(this.tuHienTai);
     }
 
     shuffle(word) {
+        if (!word) return "";
+
         return word
             .replace(/\s/g, "")
             .split("")
@@ -37,8 +39,7 @@ export default class DoanTatCaController {
     }
 
     kiemTra(input) {
-        const now = Date.now();
-        this.startTime = now;
+        this.startTime = Date.now();
 
         if (input === this.tuHienTai) {
             this.streak++;
