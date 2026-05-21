@@ -28,6 +28,14 @@ document.getElementById("btnNext").onclick =
     document.getElementById("answer").textContent =
         data.answer;
 
+    const suggestedPoint =
+        data.answer
+            .replace(/\s/g, "")
+            .length;
+
+    document.getElementById("pointValue").value =
+        suggestedPoint;
+
     await capNhatTu(
         roomId,
         data.shuffled,
@@ -52,10 +60,14 @@ document.getElementById("btnAddPlayer").onclick =
 
     if (!name) return;
 
-    await themNguoiChoi(roomId, name);
+    await themNguoiChoi(
+        roomId,
+        name
+    );
 
-    document.getElementById("playerName").value =
-        "";
+    document.getElementById(
+        "playerName"
+    ).value = "";
 };
 
 listenPhong(roomId, async (data) => {
@@ -76,20 +88,28 @@ listenPhong(roomId, async (data) => {
             document.createElement("div");
 
         const score =
-            players[name]["Điểm"];
+            players[name]["Điểm"] ?? 0;
 
         div.innerHTML = `
-            <span>
-                ${name}: ${score}
-            </span>
+            <div style="margin-bottom:10px">
 
-            <button data-plus="${name}">
-                +
-            </button>
+                <span>
+                    ${name}: ${score}
+                </span>
 
-            <button data-minus="${name}">
-                -
-            </button>
+                <button data-plus="${name}">
+                    +
+                </button>
+
+                <button data-minus="${name}">
+                    -
+                </button>
+
+                <button data-set="${name}">
+                    SET
+                </button>
+
+            </div>
         `;
 
         playersDiv.appendChild(div);
@@ -105,12 +125,19 @@ listenPhong(roomId, async (data) => {
                 btn.dataset.plus;
 
             const current =
-                players[name]["Điểm"];
+                players[name]["Điểm"] ?? 0;
+
+            const value =
+                parseInt(
+                    document
+                        .getElementById("pointValue")
+                        .value
+                ) || 0;
 
             await capNhatDiem(
                 roomId,
                 name,
-                current + 1
+                current + value
             );
         };
     });
@@ -125,12 +152,43 @@ listenPhong(roomId, async (data) => {
                 btn.dataset.minus;
 
             const current =
-                players[name]["Điểm"];
+                players[name]["Điểm"] ?? 0;
+
+            const value =
+                parseInt(
+                    document
+                        .getElementById("pointValue")
+                        .value
+                ) || 0;
 
             await capNhatDiem(
                 roomId,
                 name,
-                current - 1
+                current - value
+            );
+        };
+    });
+
+    document
+        .querySelectorAll("[data-set]")
+        .forEach(btn => {
+
+        btn.onclick = async () => {
+
+            const name =
+                btn.dataset.set;
+
+            const value =
+                parseInt(
+                    document
+                        .getElementById("pointValue")
+                        .value
+                ) || 0;
+
+            await capNhatDiem(
+                roomId,
+                name,
+                value
             );
         };
     });
