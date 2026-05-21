@@ -23,32 +23,42 @@ export async function layDanhSachTu2AmTiet() {
 }
 
 export async function layTuNgauNhien() {
-    const data = await getData("Từ 2 âm tiết");
+
+    const data = await getData("Từ 2 âm tiết", "");
 
     if (!data) return null;
 
     const keys = Object.keys(data);
 
-    const key =
-        keys[Math.floor(Math.random() * keys.length)];
-
-    const value = data[key];
-
-    if (!value || value === ".") {
-        return key;
+    if (keys.length === 0) {
+        return null;
     }
 
-    const list = value
-        .split(",")
-        .map(x => x.trim())
-        .filter(x => x && x !== ".");
+    while (true) {
 
-    if (list.length === 0) return key;
+        const key =
+            keys[Math.floor(Math.random() * keys.length)];
 
-    const last =
-        list[Math.floor(Math.random() * list.length)];
+        const value = data[key];
 
-    return `${key} ${last}`;
+        if (!value || value.trim() === ".") {
+            continue;
+        }
+
+        const list = value
+            .split(",")
+            .map(x => x.trim())
+            .filter(x => x && x !== ".");
+
+        if (list.length === 0) {
+            continue;
+        }
+
+        const last =
+            list[Math.floor(Math.random() * list.length)];
+
+        return `${key} ${last}`;
+    }
 }
 
 export async function themAmTietCuoi(tuGoc, amTietMoi = []) {
