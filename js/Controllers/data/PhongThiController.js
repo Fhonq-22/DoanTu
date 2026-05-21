@@ -1,6 +1,7 @@
 import {
     addData,
     updateData,
+    deleteData,
     listenData
 }
 from "../../Models/firebase-CRUD.js";
@@ -85,10 +86,9 @@ export async function capNhatKyTuMo(roomId, danhSachKyTu) {
 
 export async function xoaNguoiChoi(roomId, playerName) {
 
-    await updateData(
+    await deleteData(
         ROOT,
-        `${roomId}/Danh sách người chơi/${playerName}`,
-        null
+        `${roomId}/Danh sách người chơi/${playerName}`
     );
 }
 
