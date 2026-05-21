@@ -58,6 +58,7 @@ async function init() {
     bindEvents();
 
     const keys = await layDanhSachTu2AmTiet();
+    console.log("key: "+ keys);
 
     let dsTu = [];
 
@@ -92,3 +93,4 @@ async function init() {
 }
 
 init();
+console.log("load file view ok");
