@@ -60,11 +60,7 @@ listenPhong(roomId, (data) => {
             span.style.lineHeight = "30px";
             span.style.border = "1px solid #000";
 
-            if (answer[i] === " ") {
-
-                span.textContent = " ";
-
-            } else if (opened.includes(pos)) {
+            if (opened.includes(pos)) {
 
                 span.textContent = answer[i];
 
