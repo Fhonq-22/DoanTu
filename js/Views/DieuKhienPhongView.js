@@ -7,8 +7,7 @@ import {
     capNhatKyTuMo
 } from "../Controllers/data/PhongThiController.js";
 
-import DieuKhienCuocThiController
-from "../Controllers/game/DieuKhienCuocThiController.js";
+import DieuKhienCuocThiController from "../Controllers/game/DieuKhienCuocThiController.js";
 
 const controller = new DieuKhienCuocThiController();
 
@@ -16,6 +15,21 @@ const roomId = new URLSearchParams(location.search).get("room");
 
 let currentAnswer = "";
 let openedChars = [];
+
+function setSuggestedPoint(answer) {
+
+    if (!answer) return;
+
+    const point =
+        answer.replace(/\s/g, "").length;
+
+    const input =
+        document.getElementById("pointValue");
+
+    if (input) {
+        input.value = point;
+    }
+}
 
 function renderCharButtons(length, opened) {
 
@@ -28,9 +42,11 @@ function renderCharButtons(length, opened) {
     for (let i = 1; i <= length; i++) {
 
         const btn = document.createElement("button");
+
         btn.textContent = i;
 
         if (opened.includes(i)) {
+
             btn.style.background = "#4caf50";
             btn.style.color = "white";
         }
@@ -40,8 +56,11 @@ function renderCharButtons(length, opened) {
             let next = [...opened];
 
             if (next.includes(i)) {
+
                 next = next.filter(x => x !== i);
+
             } else {
+
                 next.push(i);
             }
 
@@ -66,9 +85,7 @@ document.getElementById("btnNext").onclick = async () => {
 
     document.getElementById("answer").textContent = data.answer;
 
-    const suggestedPoint = data.answer.replace(/\s/g, "").length;
-
-    document.getElementById("pointValue").value = suggestedPoint;
+    setSuggestedPoint(data.answer);
 
     await capNhatTu(roomId, data.shuffled, data.answer);
 };
@@ -80,7 +97,8 @@ document.getElementById("btnShow").onclick = async () => {
 
 document.getElementById("btnAddPlayer").onclick = async () => {
 
-    const name = document.getElementById("playerName").value.trim();
+    const name =
+        document.getElementById("playerName").value.trim();
 
     if (!name) return;
 
@@ -96,11 +114,13 @@ listenPhong(roomId, async (data) => {
     currentAnswer = data["Đáp án"] || "";
     openedChars = data["Ký tự mở khóa"] || [];
 
+    document.getElementById("answer").textContent = currentAnswer;
+
+    setSuggestedPoint(currentAnswer);
+
     if (currentAnswer) {
         renderCharButtons(currentAnswer.length, openedChars);
     }
-
-    document.getElementById("answer").textContent = currentAnswer;
 
     const playersDiv = document.getElementById("players");
 
