@@ -18,32 +18,47 @@ listenPhong(roomId, (data) => {
     const opened =
         data["Ký tự mở khóa"] || [];
 
+    const wordEl =
+        document.getElementById("word");
+
+    if (wordEl) {
+        wordEl.textContent =
+            data["Từ hiện tại"] || "";
+    }
+
     const answerEl =
         document.getElementById("answer");
 
     if (answerEl) {
 
-        let display = "";
+        if (!answer) {
 
-        for (let i = 0; i < answer.length; i++) {
+            answerEl.textContent = "";
 
-            if (answer[i] === " ") {
+        } else {
 
-                display += " ";
-                continue;
+            let display = "";
+
+            for (let i = 0; i < answer.length; i++) {
+
+                const pos = i + 1;
+
+                if (answer[i] === " ") {
+
+                    display += " ";
+
+                } else if (opened.includes(pos)) {
+
+                    display += answer[i];
+
+                } else {
+
+                    display += "_";
+                }
             }
 
-            if (opened.includes(i)) {
-
-                display += answer[i];
-
-            } else {
-
-                display += "_";
-            }
+            answerEl.textContent = display;
         }
-
-        answerEl.textContent = display;
     }
 
     const playersDiv =
@@ -68,8 +83,10 @@ listenPhong(roomId, (data) => {
         const currentScore =
             player["Điểm"] ?? 0;
 
-        if (previousScore === null || currentScore < previousScore) {
-
+        if (
+            previousScore === null ||
+            currentScore < previousScore
+        ) {
             currentRank = index + 1;
         }
 
@@ -97,7 +114,6 @@ listenPhong(roomId, (data) => {
                         );
 
                     if (el) {
-
                         el.textContent = "";
                     }
 
