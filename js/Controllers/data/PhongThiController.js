@@ -1,99 +1,67 @@
-import {
-    getDatabase,
-    ref,
-    set,
-    update,
-    onValue
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-import { app }
-from "../../Models/firebase-config.js";
-
-const db = getDatabase(app);
+import { addData, updateData, listenData }
+from "../../Models/firebase-CRUD.js";
 
 export async function taoPhong(roomId) {
-
-    await set(
-        ref(db, `rooms/${roomId}`),
+    await addData(
+        "Phòng thi",
+        roomId,
         {
-            currentWord: "",
-            answer: "",
-            showAnswer: false,
-
-            players: {}
+            "Từ hiện tại": "",
+            "Đáp án": "",
+            "Hiển thị đáp án": false,
+            "Danh sách người chơi": {}
         }
     );
 }
 
-export async function themNguoiChoi(
-    roomId,
-    playerName
-) {
-
-    await update(
-        ref(db, `rooms/${roomId}/players`),
+export async function themNguoiChoi(roomId, playerName) {
+    await updateData(
+        "Phòng thi",
+        `${roomId}/Danh sách người chơi`,
         {
             [playerName]: {
-                score: 0
+                "Điểm": 0
             }
         }
     );
 }
 
-export async function capNhatTu(
-    roomId,
-    currentWord,
-    answer
-) {
-
-    await update(
-        ref(db, `rooms/${roomId}`),
+export async function capNhatTu(roomId, currentWord, answer) {
+    await updateData(
+        "Phòng thi",
+        roomId,
         {
-            currentWord,
-            answer,
-            showAnswer: false
+            "Từ hiện tại": currentWord,
+            "Đáp án": answer,
+            "Hiển thị đáp án": false
         }
     );
 }
 
-export async function hienDapAn(
-    roomId
-) {
-
-    await update(
-        ref(db, `rooms/${roomId}`),
+export async function hienDapAn(roomId) {
+    await updateData(
+        "Phòng thi",
+        roomId,
         {
-            showAnswer: true
+            "Hiển thị đáp án": true
         }
     );
 }
 
-export async function capNhatDiem(
-    roomId,
-    playerName,
-    score
-) {
-
-    await update(
-        ref(
-            db,
-            `rooms/${roomId}/players/${playerName}`
-        ),
+export async function capNhatDiem(roomId, playerName, score) {
+    await updateData(
+        "Phòng thi",
+        `${roomId}/Danh sách người chơi/${playerName}`,
         {
-            score
+            "Điểm": score
         }
     );
 }
 
-export function listenPhong(
-    roomId,
-    callback
-) {
-
-    onValue(
-        ref(db, `rooms/${roomId}`),
-        (snapshot) => {
-
-        callback(snapshot.val());
-    });
+export function listenPhong(roomId, callback) {
+    listenData(
+        "Phòng thi",
+        roomId,
+        callback
+    );
 }
