@@ -22,6 +22,7 @@ listenPhong(roomId, (data) => {
         document.getElementById("word");
 
     if (wordEl) {
+
         wordEl.textContent =
             data["Từ hiện tại"] || "";
     }
@@ -29,35 +30,50 @@ listenPhong(roomId, (data) => {
     const answerEl =
         document.getElementById("answer");
 
+    const charDisplay =
+        document.getElementById("charDisplay");
+
     if (answerEl) {
 
-        if (!answer) {
+        answerEl.textContent =
+            data["Hiển thị đáp án"]
+                ? answer
+                : "";
+    }
 
-            answerEl.textContent = "";
+    if (charDisplay && answer) {
 
-        } else {
+        charDisplay.innerHTML = "";
 
-            let display = "";
+        for (let i = 0; i < answer.length; i++) {
 
-            for (let i = 0; i < answer.length; i++) {
+            const pos = i + 1;
 
-                const pos = i + 1;
+            const span =
+                document.createElement("span");
 
-                if (answer[i] === " ") {
+            span.style.display = "inline-block";
+            span.style.width = "30px";
+            span.style.height = "30px";
+            span.style.margin = "2px";
+            span.style.textAlign = "center";
+            span.style.lineHeight = "30px";
+            span.style.border = "1px solid #000";
 
-                    display += " ";
+            if (answer[i] === " ") {
 
-                } else if (opened.includes(pos)) {
+                span.textContent = " ";
 
-                    display += answer[i];
+            } else if (opened.includes(pos)) {
 
-                } else {
+                span.textContent = answer[i];
 
-                    display += "_";
-                }
+            } else {
+
+                span.textContent = "_";
             }
 
-            answerEl.textContent = display;
+            charDisplay.appendChild(span);
         }
     }
 
@@ -71,8 +87,10 @@ listenPhong(roomId, (data) => {
 
     const sortedPlayers =
         Object.entries(players)
-            .sort((a, b) =>
-                (b[1]["Điểm"] ?? 0) - (a[1]["Điểm"] ?? 0)
+            .sort(
+                (a, b) =>
+                    (b[1]["Điểm"] ?? 0)
+                    - (a[1]["Điểm"] ?? 0)
             );
 
     let currentRank = 0;
@@ -84,13 +102,14 @@ listenPhong(roomId, (data) => {
             player["Điểm"] ?? 0;
 
         if (
-            previousScore === null ||
-            currentScore < previousScore
+            previousScore === null
+            || currentScore < previousScore
         ) {
             currentRank = index + 1;
         }
 
-        previousScore = currentScore;
+        previousScore =
+            currentScore;
 
         if (lastScores[name] !== undefined) {
 
@@ -121,7 +140,8 @@ listenPhong(roomId, (data) => {
             }
         }
 
-        lastScores[name] = currentScore;
+        lastScores[name] =
+            currentScore;
 
         let rankText = "";
 
