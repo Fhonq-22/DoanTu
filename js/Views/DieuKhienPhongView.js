@@ -4,7 +4,9 @@ import {
     themNguoiChoi,
     capNhatDiem,
     listenPhong,
-    capNhatKyTuMo
+    capNhatKyTuMo,
+    xoaNguoiChoi,
+    resetTuHienTai
 } from "../Controllers/data/PhongThiController.js";
 
 import DieuKhienCuocThiController from "../Controllers/game/DieuKhienCuocThiController.js";
@@ -26,9 +28,7 @@ function setSuggestedPoint(answer) {
     const input =
         document.getElementById("pointValue");
 
-    if (input) {
-        input.value = point;
-    }
+    if (input) input.value = point;
 }
 
 function renderCharButtons(length, opened) {
@@ -42,11 +42,9 @@ function renderCharButtons(length, opened) {
     for (let i = 1; i <= length; i++) {
 
         const btn = document.createElement("button");
-
         btn.textContent = i;
 
         if (opened.includes(i)) {
-
             btn.style.background = "#4caf50";
             btn.style.color = "white";
         }
@@ -56,11 +54,8 @@ function renderCharButtons(length, opened) {
             let next = [...opened];
 
             if (next.includes(i)) {
-
                 next = next.filter(x => x !== i);
-
             } else {
-
                 next.push(i);
             }
 
@@ -78,7 +73,6 @@ document.getElementById("btnNext").onclick = async () => {
     if (!data) return;
 
     currentAnswer = data.answer;
-
     openedChars = [];
 
     await capNhatKyTuMo(roomId, []);
@@ -91,7 +85,6 @@ document.getElementById("btnNext").onclick = async () => {
 };
 
 document.getElementById("btnShow").onclick = async () => {
-
     await hienDapAn(roomId);
 };
 
@@ -123,7 +116,6 @@ listenPhong(roomId, async (data) => {
     }
 
     const playersDiv = document.getElementById("players");
-
     if (!playersDiv) return;
 
     playersDiv.innerHTML = "";
@@ -133,7 +125,6 @@ listenPhong(roomId, async (data) => {
     for (const name in players) {
 
         const div = document.createElement("div");
-
         const score = players[name]["Điểm"] ?? 0;
 
         div.innerHTML = `
@@ -142,6 +133,7 @@ listenPhong(roomId, async (data) => {
                 <button data-plus="${name}">+</button>
                 <button data-minus="${name}">-</button>
                 <button data-set="${name}">SET</button>
+                <button data-del="${name}">X</button>
             </div>
         `;
 
@@ -153,7 +145,6 @@ listenPhong(roomId, async (data) => {
         btn.onclick = async () => {
 
             const name = btn.dataset.plus;
-
             const current = players[name]["Điểm"] ?? 0;
 
             const value =
@@ -168,7 +159,6 @@ listenPhong(roomId, async (data) => {
         btn.onclick = async () => {
 
             const name = btn.dataset.minus;
-
             const current = players[name]["Điểm"] ?? 0;
 
             const value =
@@ -183,11 +173,32 @@ listenPhong(roomId, async (data) => {
         btn.onclick = async () => {
 
             const name = btn.dataset.set;
-
             const value =
                 parseInt(document.getElementById("pointValue").value) || 0;
 
             await capNhatDiem(roomId, name, value);
         };
     });
+
+    document.querySelectorAll("[data-del]").forEach(btn => {
+
+        btn.onclick = async () => {
+            const name = btn.dataset.del;
+            await xoaNguoiChoi(roomId, name);
+        };
+    });
 });
+
+document.getElementById("btnShuffle").onclick = async () => {
+
+    if (!currentAnswer) return;
+
+    const shuffled =
+        currentAnswer
+            .replace(/\s/g, "")
+            .split("")
+            .sort(() => Math.random() - 0.5)
+            .join("/");
+
+    await resetTuHienTai(roomId, shuffled);
+};

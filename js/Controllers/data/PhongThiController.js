@@ -83,6 +83,26 @@ export async function capNhatKyTuMo(roomId, danhSachKyTu) {
     );
 }
 
+export async function xoaNguoiChoi(roomId, playerName) {
+
+    await updateData(
+        ROOT,
+        `${roomId}/Danh sách người chơi/${playerName}`,
+        null
+    );
+}
+
+export async function resetTuHienTai(roomId, shuffledWord) {
+
+    await updateData(
+        ROOT,
+        roomId,
+        {
+            "Từ hiện tại": shuffledWord
+        }
+    );
+}
+
 export function listenPhong(roomId, callback) {
 
     listenData(
