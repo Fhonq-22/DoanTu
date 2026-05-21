@@ -1,4 +1,5 @@
-// MODEL/model.js
+// js/Models/MODEL.js
+
 export class Tu2AmTiet {
     constructor(TuGoc, DanhSachAmTietCuoi = "") {
         this.TuGoc = TuGoc;
@@ -40,5 +41,47 @@ export class DongGop {
 
     toJSON() {
         return this.Status;
+    }
+}
+
+export class NguoiChoi {
+    constructor(Ten, Diem = 0) {
+        this.Ten = Ten;
+        this.Diem = Diem;
+    }
+
+    toJSON() {
+        return {
+            "Điểm": this.Diem
+        };
+    }
+}
+
+export class PhongThi {
+    constructor(
+        MaPhong,
+        TuHienTai = "",
+        DapAn = "",
+        HienThiDapAn = false,
+        DanhSachNguoiChoi = {}
+    ) {
+        this.MaPhong = MaPhong;
+
+        this.TuHienTai = TuHienTai;
+
+        this.DapAn = DapAn;
+
+        this.HienThiDapAn = HienThiDapAn;
+
+        this.DanhSachNguoiChoi = DanhSachNguoiChoi;
+    }
+
+    toJSON() {
+        return {
+            "Từ hiện tại": this.TuHienTai,
+            "Đáp án": this.DapAn,
+            "Hiển thị đáp án": this.HienThiDapAn,
+            "Danh sách người chơi": this.DanhSachNguoiChoi
+        };
     }
 }
