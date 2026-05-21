@@ -1,9 +1,11 @@
 import { addData, updateData, listenData }
 from "../../Models/firebase-CRUD.js";
 
+const ROOT = "Dữ liệu trò chơi/Đoán từ/Phòng thi";
+
 export async function taoPhong(roomId) {
     await addData(
-        "Phòng thi",
+        ROOT,
         roomId,
         {
             "Từ hiện tại": "",
@@ -16,7 +18,7 @@ export async function taoPhong(roomId) {
 
 export async function themNguoiChoi(roomId, playerName) {
     await updateData(
-        "Phòng thi",
+        ROOT,
         `${roomId}/Danh sách người chơi`,
         {
             [playerName]: {
@@ -28,19 +30,21 @@ export async function themNguoiChoi(roomId, playerName) {
 
 export async function capNhatTu(roomId, currentWord, answer) {
     await updateData(
-        "Phòng thi",
+        ROOT,
         roomId,
         {
             "Từ hiện tại": currentWord,
+
             "Đáp án": answer,
+
             "Hiển thị đáp án": false
         }
     );
 }
 
-export async function hienDapAn(roomId) {
+export async function hienDapAn( roomId) {
     await updateData(
-        "Phòng thi",
+        ROOT,
         roomId,
         {
             "Hiển thị đáp án": true
@@ -50,7 +54,7 @@ export async function hienDapAn(roomId) {
 
 export async function capNhatDiem(roomId, playerName, score) {
     await updateData(
-        "Phòng thi",
+        ROOT,
         `${roomId}/Danh sách người chơi/${playerName}`,
         {
             "Điểm": score
@@ -60,7 +64,7 @@ export async function capNhatDiem(roomId, playerName, score) {
 
 export function listenPhong(roomId, callback) {
     listenData(
-        "Phòng thi",
+        ROOT,
         roomId,
         callback
     );
