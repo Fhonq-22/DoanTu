@@ -26,9 +26,15 @@ export default class TheoThoiGianController {
         this.lichSuSai = [];
 
         this.thoiGianBatDau =
-            Date.now();
+            null;
 
         this.tongThoiGian = 0;
+    }
+
+    batDau() {
+
+        this.thoiGianBatDau =
+            Date.now();
     }
 
     async chonTu() {
@@ -40,7 +46,8 @@ export default class TheoThoiGianController {
             return null;
         }
 
-        this.tuHienTai = word;
+        this.tuHienTai =
+            word;
 
         return this.shuffle(word);
     }
@@ -51,13 +58,19 @@ export default class TheoThoiGianController {
             .replace(/\s/g, "")
             .split("")
             .filter(Boolean)
-            .sort(() => Math.random() - 0.5)
+            .sort(
+                () =>
+                    Math.random() - 0.5
+            )
             .join("/");
     }
 
     async kiemTra(input) {
 
-        if (input === this.tuHienTai) {
+        if (
+            input ===
+            this.tuHienTai
+        ) {
 
             this.streak++;
 
@@ -71,7 +84,8 @@ export default class TheoThoiGianController {
 
             return {
                 correct: true,
-                next: await this.chonTu()
+                next:
+                    await this.chonTu()
             };
         }
 
@@ -91,6 +105,7 @@ export default class TheoThoiGianController {
         if (
             this.timeConLai <= 15
         ) {
+
             return null;
         }
 
@@ -103,11 +118,22 @@ export default class TheoThoiGianController {
         );
 
         return {
-            next: await this.chonTu()
+            next:
+                await this.chonTu()
         };
     }
 
     ketThuc() {
+
+        if (
+            this.thoiGianBatDau
+            === null
+        ) {
+
+            this.tongThoiGian = 0;
+
+            return;
+        }
 
         this.tongThoiGian =
             Date.now()

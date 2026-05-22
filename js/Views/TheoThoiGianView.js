@@ -17,6 +17,8 @@ let timer = null;
 
 let daKetThuc = false;
 
+let thoiDiemKetThuc = 0;
+
 function render(word) {
 
     document
@@ -27,12 +29,26 @@ function render(word) {
 
 function capNhatThoiGian() {
 
+    const conLai =
+        Math.max(
+            0,
+            Math.ceil(
+                (
+                    thoiDiemKetThuc
+                    - Date.now()
+                ) / 1000
+            )
+        );
+
+    controller.timeConLai =
+        conLai;
+
     document
         .getElementById(
             "timeConLai"
         )
         .textContent =
-        `Thời gian còn lại: ${controller.timeConLai} giây`;
+        `Thời gian còn lại: ${conLai} giây`;
 }
 
 function hienThiLichSuSai() {
@@ -51,10 +67,10 @@ function hienThiLichSuSai() {
         .lichSuSai
         .forEach(word => {
 
-        counts[word] =
-            (counts[word] || 0)
-            + 1;
-    });
+            counts[word] =
+                (counts[word] || 0)
+                + 1;
+        });
 
     for (
         const word
@@ -75,7 +91,9 @@ function hienThiLichSuSai() {
 
 function ketThuc() {
 
-    if (daKetThuc) return;
+    if (daKetThuc) {
+        return;
+    }
 
     daKetThuc = true;
 
@@ -195,50 +213,79 @@ function chiaSeThanhTich() {
             JSON.stringify(data)
         );
 
-    navigator.share({
+    navigator
+        .share({
 
-        title:
-            "Thành tích Đoán từ theo thời gian",
+            title:
+                "Thành tích Đoán từ theo thời gian",
 
-        text:
-            "Xem thành tích của tôi tại:",
+            text:
+                "Xem thành tích của tôi tại:",
 
-        url:
-            `${location.origin}/DoanTu/ThanhTich.html?data=${encoded}`
-    });
+            url:
+                `${location.origin}/DoanTu/ThanhTich.html?data=${encoded}`
+        })
+        .catch(() => {});
 }
 
 async function init() {
 
+    document
+        .getElementById(
+            "word"
+        )
+        .textContent =
+        "Đang tải...";
+
     const first =
         await controller.chonTu();
 
+    if (!first) {
+
+        document
+            .getElementById(
+                "word"
+            )
+            .textContent =
+            "Không có dữ liệu";
+
+        return;
+    }
+
     render(first);
+
+    controller.batDau();
+
+    thoiDiemKetThuc =
+        Date.now()
+        +
+        (
+            thoiGian
+            * 1000
+        );
 
     capNhatThoiGian();
 
     timer =
         setInterval(() => {
 
-        controller.timeConLai--;
+            capNhatThoiGian();
 
-        capNhatThoiGian();
+            if (
+                controller.timeConLai <= 0
+            ) {
 
-        if (
-            controller.timeConLai <= 0
-        ) {
+                document
+                    .getElementById(
+                        "message"
+                    )
+                    .textContent =
+                    "Hết thời gian!";
 
-            document
-                .getElementById(
-                    "message"
-                )
-                .textContent =
-                "Hết thời gian!";
+                ketThuc();
+            }
 
-            ketThuc();
-        }
-
-    }, 1000);
+        }, 100);
 }
 
 document
@@ -248,47 +295,55 @@ document
     .onclick =
     async () => {
 
-    if (daKetThuc) return;
+        if (
+            daKetThuc
+        ) {
+            return;
+        }
 
-    const input =
+        const input =
+            document
+                .getElementById(
+                    "inputDoan"
+                )
+                .value
+                .trim();
+
+        const result =
+            await controller
+                .kiemTra(input);
+
+        if (
+            result.correct
+        ) {
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                "Chính xác!";
+
+            render(
+                result.next
+            );
+
+        } else {
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                "Sai rồi!";
+        }
+
         document
             .getElementById(
                 "inputDoan"
             )
-            .value
-            .trim();
-
-    const result =
-        await controller
-            .kiemTra(input);
-
-    if (result.correct) {
-
-        document
-            .getElementById(
-                "message"
-            )
-            .textContent =
-            "Chính xác!";
-
-        render(result.next);
-
-    } else {
-
-        document
-            .getElementById(
-                "message"
-            )
-            .textContent =
-            "Sai rồi!";
-    }
-
-    document
-        .getElementById(
-            "inputDoan"
-        )
-        .value = "";
-};
+            .value = "";
+    };
 
 document
     .getElementById(
@@ -297,26 +352,44 @@ document
     .onclick =
     async () => {
 
-    const result =
-        await controller
-            .boQua();
+        if (
+            daKetThuc
+        ) {
+            return;
+        }
 
-    if (!result) {
+        const result =
+            await controller
+                .boQua();
+
+        if (!result) {
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                "Thời gian quá ít, không thể bỏ qua!";
+
+            return;
+        }
+
+        thoiDiemKetThuc -=
+            15000;
+
+        render(
+            result.next
+        );
+
+        capNhatThoiGian();
 
         document
             .getElementById(
                 "message"
             )
             .textContent =
-            "Thời gian quá ít, không thể bỏ qua!";
-
-        return;
-    }
-
-    render(result.next);
-
-    capNhatThoiGian();
-};
+            "Đã bỏ qua!";
+    };
 
 document
     .getElementById(
@@ -325,18 +398,18 @@ document
     .onclick =
     () => {
 
-    document
-        .getElementById(
-            "inputDoan"
-        )
-        .value = "";
+        document
+            .getElementById(
+                "inputDoan"
+            )
+            .value = "";
 
-    document
-        .getElementById(
-            "message"
-        )
-        .textContent = "";
-};
+        document
+            .getElementById(
+                "message"
+            )
+            .textContent = "";
+    };
 
 document
     .getElementById(
@@ -346,24 +419,27 @@ document
         "keypress",
         e => {
 
-        if (
-            e.key === "Enter"
-        ) {
+            if (
+                e.key === "Enter"
+            ) {
 
-            document
-                .getElementById(
-                    "btnDoan"
-                )
-                .click();
-        }
-    });
+                document
+                    .getElementById(
+                        "btnDoan"
+                    )
+                    .click();
+            }
+        });
 
 document
     .getElementById(
         "choiLai"
     )
     .onclick =
-    () => location.reload();
+    () => {
+
+        location.reload();
+    };
 
 document
     .getElementById(
@@ -372,9 +448,9 @@ document
     .onclick =
     () => {
 
-    location.href =
-        "TrangChu.html";
-};
+        location.href =
+            "TrangChu.html";
+    };
 
 document
     .getElementById(

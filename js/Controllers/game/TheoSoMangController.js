@@ -26,10 +26,16 @@ export default class TheoSoMangController {
         this.soLanBoQua = 0;
 
         this.thoiGianBatDau =
-            Date.now();
+            null;
 
         this.tongThoiGian =
             0;
+    }
+
+    batDau() {
+
+        this.thoiGianBatDau =
+            Date.now();
     }
 
     async chonTu() {
@@ -52,6 +58,7 @@ export default class TheoSoMangController {
         return word
             .replace(/\s/g, "")
             .split("")
+            .filter(Boolean)
             .sort(
                 () =>
                     Math.random() - 0.5
@@ -127,6 +134,17 @@ export default class TheoSoMangController {
     }
 
     ketThuc() {
+
+        if (
+            this.thoiGianBatDau
+            === null
+        ) {
+
+            this.tongThoiGian =
+                0;
+
+            return;
+        }
 
         this.tongThoiGian =
             Date.now()

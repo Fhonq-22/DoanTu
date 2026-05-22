@@ -97,6 +97,8 @@ function capNhatLichSuSai() {
 
 function ketThuc() {
 
+    if (daKetThuc) return;
+
     daKetThuc = true;
 
     controller.ketThuc();
@@ -205,17 +207,19 @@ function chiaSeThanhTich() {
             JSON.stringify(data)
         );
 
-    navigator.share({
+    navigator
+        .share({
 
-        title:
-            "Thành tích Đoán từ",
+            title:
+                "Thành tích Đoán từ",
 
-        text:
-            "Xem thành tích của tôi tại:",
+            text:
+                "Xem thành tích của tôi tại:",
 
-        url:
-            `${location.origin}/DoanTu/ThanhTich.html?data=${encoded}`
-    });
+            url:
+                `${location.origin}/DoanTu/ThanhTich.html?data=${encoded}`
+        })
+        .catch(() => {});
 }
 
 function bindEvents() {
@@ -227,64 +231,64 @@ function bindEvents() {
         .onclick =
         async () => {
 
-        if (
-            daKetThuc
-        ) return;
+            if (
+                daKetThuc
+            ) return;
 
-        const input =
+            const input =
+                document
+                    .getElementById(
+                        "inputDoan"
+                    )
+                    .value
+                    .trim();
+
+            const result =
+                await controller
+                    .kiemTra(
+                        input
+                    );
+
+            if (
+                result.correct
+            ) {
+
+                document
+                    .getElementById(
+                        "message"
+                    )
+                    .textContent =
+                    "Chính xác!";
+
+                render(
+                    result.next
+                );
+
+            } else {
+
+                document
+                    .getElementById(
+                        "message"
+                    )
+                    .textContent =
+                    "Sai rồi!";
+
+                capNhatMang();
+
+                if (
+                    result.gameOver
+                ) {
+
+                    ketThuc();
+                }
+            }
+
             document
                 .getElementById(
                     "inputDoan"
                 )
-                .value
-                .trim();
-
-        const result =
-            await controller
-                .kiemTra(
-                    input
-                );
-
-        if (
-            result.correct
-        ) {
-
-            document
-                .getElementById(
-                    "message"
-                )
-                .textContent =
-                "Chính xác!";
-
-            render(
-                result.next
-            );
-
-        } else {
-
-            document
-                .getElementById(
-                    "message"
-                )
-                .textContent =
-                "Sai rồi!";
-
-            capNhatMang();
-
-            if (
-                result.gameOver
-            ) {
-
-                ketThuc();
-            }
-        }
-
-        document
-            .getElementById(
-                "inputDoan"
-            )
-            .value = "";
-    };
+                .value = "";
+        };
 
     document
         .getElementById(
@@ -293,53 +297,55 @@ function bindEvents() {
         .onclick =
         async () => {
 
-        if (
-            daKetThuc
-        ) return;
-
-        const result =
-            await controller
-                .boQua();
-
-        capNhatMang();
-
-        if (
-            result.gameOver
-        ) {
-
-            ketThuc();
-
-            return;
-        }
-
-        document
-            .getElementById(
-                "message"
-            )
-            .textContent =
-            "Đáp án: "
-            +
-            result.answer;
-
-        setTimeout(
-            () => {
-
             if (
                 daKetThuc
             ) return;
 
-            render(
-                result.next
-            );
+            const result =
+                await controller
+                    .boQua();
+
+            capNhatMang();
+
+            if (
+                result.gameOver
+            ) {
+
+                ketThuc();
+
+                return;
+            }
 
             document
                 .getElementById(
                     "message"
                 )
-                .textContent = "";
+                .textContent =
+                "Đáp án: "
+                +
+                result.answer;
 
-        }, 1500);
-    };
+            setTimeout(
+                () => {
+
+                    if (
+                        daKetThuc
+                    ) return;
+
+                    render(
+                        result.next
+                    );
+
+                    document
+                        .getElementById(
+                            "message"
+                        )
+                        .textContent = "";
+
+                },
+                1500
+            );
+        };
 
     document
         .getElementById(
@@ -348,18 +354,18 @@ function bindEvents() {
         .onclick =
         () => {
 
-        document
-            .getElementById(
-                "inputDoan"
-            )
-            .value = "";
+            document
+                .getElementById(
+                    "inputDoan"
+                )
+                .value = "";
 
-        document
-            .getElementById(
-                "message"
-            )
-            .textContent = "";
-    };
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent = "";
+        };
 
     document
         .getElementById(
@@ -368,8 +374,8 @@ function bindEvents() {
         .onclick =
         () => {
 
-        location.reload();
-    };
+            location.reload();
+        };
 
     document
         .getElementById(
@@ -378,9 +384,9 @@ function bindEvents() {
         .onclick =
         () => {
 
-        location.href =
-            "TrangChu.html";
-    };
+            location.href =
+                "TrangChu.html";
+        };
 
     document
         .getElementById(
@@ -397,18 +403,18 @@ function bindEvents() {
             "keypress",
             e => {
 
-            if (
-                e.key ===
-                "Enter"
-            ) {
+                if (
+                    e.key ===
+                    "Enter"
+                ) {
 
-                document
-                    .getElementById(
-                        "btnDoan"
-                    )
-                    .click();
-            }
-        });
+                    document
+                        .getElementById(
+                            "btnDoan"
+                        )
+                        .click();
+                }
+            });
 }
 
 async function init() {
@@ -417,11 +423,32 @@ async function init() {
 
     capNhatMang();
 
+    document
+        .getElementById(
+            "word"
+        )
+        .textContent =
+        "Đang tải...";
+
     const word =
         await controller
             .chonTu();
 
+    if (!word) {
+
+        document
+            .getElementById(
+                "word"
+            )
+            .textContent =
+            "Không có dữ liệu";
+
+        return;
+    }
+
     render(word);
+
+    controller.batDau();
 }
 
 init();
