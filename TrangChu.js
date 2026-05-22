@@ -27,7 +27,7 @@ function chuyenDenTheoSoMang() {
 
 function chuyenDenTheoThoiGian() {
     const thoiGian = document.getElementById('thoiGian').value;
-    window.location.href = 'TheoThoiGianMVC.html?thoiGian=' + thoiGian;
+    window.location.href = 'TheoThoiGian.html?thoiGian=' + thoiGian;
 }
 
 function chuyenDenDoanTatCa() {
