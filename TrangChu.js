@@ -25,6 +25,11 @@ function chuyenDenTheoSoMang() {
     window.location.href = 'TheoSoMang.html?soMang=' + soMang;
 }
 
+function chuyenDenTheoSoMangMVC() {
+    const soMang = document.getElementById('soMang').value;
+    window.location.href = 'TheoSoMangMVC.html?soMang=' + soMang;
+}
+
 function chuyenDenTheoThoiGian() {
     const thoiGian = document.getElementById('thoiGian').value;
     window.location.href = 'TheoThoiGian.html?thoiGian=' + thoiGian;
@@ -32,8 +37,4 @@ function chuyenDenTheoThoiGian() {
 
 function chuyenDenDoanTatCa() {
     window.location.href = 'DoanTatCa.html';
-}
-
-function chuyenDenDoanTatCaMVC() {
-    window.location.href = 'DoanTatCaMVC.html';
 }
