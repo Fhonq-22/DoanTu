@@ -6,6 +6,7 @@ const roomId =
         .get("room");
 
 const lastScores = {};
+
 const scoreEffects = {};
 
 listenPhong(roomId, (data) => {
@@ -41,7 +42,7 @@ listenPhong(roomId, (data) => {
                 : "";
     }
 
-    if (charDisplay && answer) {
+    if (charDisplay) {
 
         charDisplay.innerHTML = "";
 
@@ -62,7 +63,8 @@ listenPhong(roomId, (data) => {
 
             if (opened.includes(pos)) {
 
-                span.textContent = answer[i];
+                span.textContent =
+                    answer[i];
 
             } else {
 
@@ -90,9 +92,13 @@ listenPhong(roomId, (data) => {
             );
 
     let currentRank = 0;
+
+    let rankGroup = 0;
+
     let previousScore = null;
 
-    sortedPlayers.forEach(([name, player], index) => {
+    sortedPlayers.forEach(
+        ([name, player], index) => {
 
         const currentScore =
             player["Điểm"] ?? 0;
@@ -101,16 +107,23 @@ listenPhong(roomId, (data) => {
             previousScore === null
             || currentScore < previousScore
         ) {
-            currentRank = index + 1;
+
+            rankGroup++;
+
+            currentRank =
+                rankGroup;
         }
 
         previousScore =
             currentScore;
 
-        if (lastScores[name] !== undefined) {
+        if (
+            lastScores[name] !== undefined
+        ) {
 
             const diff =
-                currentScore - lastScores[name];
+                currentScore -
+                lastScores[name];
 
             if (diff !== 0) {
 
@@ -129,6 +142,7 @@ listenPhong(roomId, (data) => {
                         );
 
                     if (el) {
+
                         el.textContent = "";
                     }
 
@@ -139,22 +153,41 @@ listenPhong(roomId, (data) => {
         lastScores[name] =
             currentScore;
 
-        let rankText = "";
+        let icon = "🏆";
 
-        if (currentRank === 1) rankText = "🥇";
-        else if (currentRank === 2) rankText = "🥈";
-        else if (currentRank === 3) rankText = "🥉";
-        else rankText = `#${currentRank}`;
+        if (currentRank === 1) {
+
+            icon = "🥇";
+
+        } else if (
+            currentRank === 2
+        ) {
+
+            icon = "🥈";
+
+        } else if (
+            currentRank === 3
+        ) {
+
+            icon = "🥉";
+        }
 
         const div =
             document.createElement("div");
 
         div.innerHTML = `
             <span>
-                ${rankText} ${name}: ${currentScore}
+                ${icon}
+                ${currentRank}
+                -
+                ${name}
+                :
+                ${currentScore}
             </span>
 
-            <span data-effect="${name}">
+            <span
+                data-effect="${name}"
+            >
                 ${scoreEffects[name] || ""}
             </span>
         `;
