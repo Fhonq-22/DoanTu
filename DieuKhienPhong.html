@@ -3,57 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
     <title>Điều khiển phòng</title>
 </head>
 
 <body>
 
-    <h1>Điều khiển phòng</h1>
+    <div id="roomSelector">
 
-    <h2 id="answer"></h2>
-
-    <div id="charButtons"></div>
-
-    <button id="btnNext">
-        Từ mới
-    </button>
-
-    <button id="btnShuffle">
-        Trộn từ
-    </button>
-
-    <button id="btnShow">
-        Hiện đáp án
-    </button>
-
-    <div>
-        <label>Điểm:</label>
+        <h1>Điều khiển phòng</h1>
 
         <input
-            id="pointValue"
-            type="number"
-            value="1"
-            min="0"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <input
-            id="playerName"
-            placeholder="Tên người chơi"
+            id="roomInput"
+            placeholder="Nhập mã phòng"
         >
 
-        <button id="btnAddPlayer">
-            Thêm người chơi
+        <button id="btnJoinRoom">
+            Vào phòng
         </button>
+
     </div>
 
-    <br>
+    <div id="roomContent">
 
-    <div id="players"></div>
+        <h1 id="roomInfo"></h1>
+
+        <h2 id="answer"></h2>
+
+        <div id="charButtons"></div>
+
+        <button id="btnNext">
+            Từ mới
+        </button>
+
+        <button id="btnShuffle">
+            Trộn từ
+        </button>
+
+        <button id="btnShow">
+            Hiện đáp án
+        </button>
+
+        <div>
+            <label>Điểm:</label>
+
+            <input
+                id="pointValue"
+                type="number"
+                value="1"
+                min="0"
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <input
+                id="playerName"
+                placeholder="Tên người chơi"
+            >
+
+            <button id="btnAddPlayer">
+                Thêm người chơi
+            </button>
+        </div>
+
+        <br>
+
+        <div id="players"></div>
+
+    </div>
 
     <script
         type="module"
@@ -61,4 +83,5 @@
     ></script>
 
 </body>
+
 </html>
