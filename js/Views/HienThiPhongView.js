@@ -5,193 +5,254 @@ const roomId =
     new URLSearchParams(location.search)
         .get("room");
 
-const lastScores = {};
+const roomSelector =
+    document.getElementById("roomSelector");
 
-const scoreEffects = {};
+const roomContent =
+    document.getElementById("roomContent");
 
-listenPhong(roomId, (data) => {
+if (!roomId) {
 
-    if (!data) return;
-
-    const answer =
-        data["Đáp án"] || "";
-
-    const opened =
-        data["Ký tự mở khóa"] || [];
-
-    const wordEl =
-        document.getElementById("word");
-
-    if (wordEl) {
-
-        wordEl.textContent =
-            data["Từ hiện tại"] || "";
+    if (roomContent) {
+        roomContent.style.display = "none";
     }
 
-    const answerEl =
-        document.getElementById("answer");
+    document.getElementById("btnJoinRoom").onclick =
+        () => {
 
-    const charDisplay =
-        document.getElementById("charDisplay");
+        const room =
+            document
+                .getElementById("roomInput")
+                .value
+                .trim();
 
-    if (answerEl) {
+        if (!room) return;
 
-        answerEl.textContent =
-            data["Hiển thị đáp án"]
-                ? answer
-                : "";
+        location.href =
+            `HienThiPhong.html?room=${room}`;
+    };
+
+} else {
+
+    if (roomSelector) {
+        roomSelector.style.display = "none";
     }
 
-    if (charDisplay) {
-
-        charDisplay.innerHTML = "";
-
-        for (let i = 0; i < answer.length; i++) {
-
-            const pos = i + 1;
-
-            const span =
-                document.createElement("span");
-
-            span.style.display = "inline-block";
-            span.style.width = "30px";
-            span.style.height = "30px";
-            span.style.margin = "2px";
-            span.style.textAlign = "center";
-            span.style.lineHeight = "30px";
-            span.style.border = "1px solid #000";
-
-            if (opened.includes(pos)) {
-
-                span.textContent =
-                    answer[i];
-
-            } else {
-
-                span.textContent = "_";
-            }
-
-            charDisplay.appendChild(span);
-        }
+    if (roomContent) {
+        roomContent.style.display = "block";
     }
 
-    const playersDiv =
-        document.getElementById("players");
+    const roomInfo =
+        document.getElementById("roomInfo");
 
-    playersDiv.innerHTML = "";
+    if (roomInfo) {
 
-    const players =
-        data["Danh sách người chơi"] || {};
+        roomInfo.textContent =
+            `Phòng: ${roomId}`;
+    }
 
-    const sortedPlayers =
-        Object.entries(players)
-            .sort(
-                (a, b) =>
-                    (b[1]["Điểm"] ?? 0)
-                    - (a[1]["Điểm"] ?? 0)
-            );
+    const lastScores = {};
 
-    let currentRank = 0;
+    const scoreEffects = {};
 
-    let rankGroup = 0;
+    listenPhong(roomId, (data) => {
 
-    let previousScore = null;
+        if (!data) return;
 
-    sortedPlayers.forEach(
-        ([name, player], index) => {
+        const answer =
+            data["Đáp án"] || "";
 
-        const currentScore =
-            player["Điểm"] ?? 0;
+        const opened =
+            data["Ký tự mở khóa"] || [];
 
-        if (
-            previousScore === null
-            || currentScore < previousScore
-        ) {
+        const pointValue =
+            answer
+                .replace(/\s/g, "")
+                .length;
 
-            rankGroup++;
+        const pointEl =
+            document.getElementById("pointValue");
 
-            currentRank =
-                rankGroup;
+        if (pointEl) {
+
+            pointEl.textContent =
+                `Giá trị từ: ${pointValue} điểm`;
         }
 
-        previousScore =
-            currentScore;
+        const wordEl =
+            document.getElementById("word");
 
-        if (
-            lastScores[name] !== undefined
-        ) {
+        if (wordEl) {
 
-            const diff =
-                currentScore -
-                lastScores[name];
+            wordEl.textContent =
+                data["Từ hiện tại"] || "";
+        }
 
-            if (diff !== 0) {
+        const answerEl =
+            document.getElementById("answer");
 
-                scoreEffects[name] =
-                    diff > 0
-                        ? `(+${diff}đ)`
-                        : `(${diff}đ)`;
+        const charDisplay =
+            document.getElementById("charDisplay");
 
-                setTimeout(() => {
+        if (answerEl) {
 
-                    delete scoreEffects[name];
+            answerEl.textContent =
+                data["Hiển thị đáp án"]
+                    ? answer
+                    : "";
+        }
 
-                    const el =
-                        document.querySelector(
-                            `[data-effect="${name}"]`
-                        );
+        if (charDisplay) {
 
-                    if (el) {
+            charDisplay.innerHTML = "";
 
-                        el.textContent = "";
-                    }
+            for (let i = 0; i < answer.length; i++) {
 
-                }, 3000);
+                const pos = i + 1;
+
+                const span =
+                    document.createElement("span");
+
+                span.style.display = "inline-block";
+                span.style.width = "30px";
+                span.style.height = "30px";
+                span.style.margin = "2px";
+                span.style.textAlign = "center";
+                span.style.lineHeight = "30px";
+                span.style.border = "1px solid #000";
+
+                if (opened.includes(pos)) {
+
+                    span.textContent =
+                        answer[i];
+
+                } else {
+
+                    span.textContent = "_";
+                }
+
+                charDisplay.appendChild(span);
             }
         }
 
-        lastScores[name] =
-            currentScore;
+        const playersDiv =
+            document.getElementById("players");
 
-        let icon = "🏆";
+        playersDiv.innerHTML = "";
 
-        if (currentRank === 1) {
+        const players =
+            data["Danh sách người chơi"] || {};
 
-            icon = "🥇";
+        const sortedPlayers =
+            Object.entries(players)
+                .sort(
+                    (a, b) =>
+                        (b[1]["Điểm"] ?? 0)
+                        - (a[1]["Điểm"] ?? 0)
+                );
 
-        } else if (
-            currentRank === 2
-        ) {
+        let currentRank = 0;
 
-            icon = "🥈";
+        let rankGroup = 0;
 
-        } else if (
-            currentRank === 3
-        ) {
+        let previousScore = null;
 
-            icon = "🥉";
-        }
+        sortedPlayers.forEach(
+            ([name, player]) => {
 
-        const div =
-            document.createElement("div");
+            const currentScore =
+                player["Điểm"] ?? 0;
 
-        div.innerHTML = `
-            <span>
-                ${icon}
-                ${currentRank}
-                -
-                ${name}
-                :
-                ${currentScore}
-            </span>
+            if (
+                previousScore === null
+                || currentScore < previousScore
+            ) {
 
-            <span
-                data-effect="${name}"
-            >
-                ${scoreEffects[name] || ""}
-            </span>
-        `;
+                rankGroup++;
 
-        playersDiv.appendChild(div);
+                currentRank =
+                    rankGroup;
+            }
+
+            previousScore =
+                currentScore;
+
+            if (
+                lastScores[name] !== undefined
+            ) {
+
+                const diff =
+                    currentScore -
+                    lastScores[name];
+
+                if (diff !== 0) {
+
+                    scoreEffects[name] =
+                        diff > 0
+                            ? `(+${diff}đ)`
+                            : `(${diff}đ)`;
+
+                    setTimeout(() => {
+
+                        delete scoreEffects[name];
+
+                        const el =
+                            document.querySelector(
+                                `[data-effect="${name}"]`
+                            );
+
+                        if (el) {
+
+                            el.textContent = "";
+                        }
+
+                    }, 3000);
+                }
+            }
+
+            lastScores[name] =
+                currentScore;
+
+            let icon = "🏆";
+
+            if (currentRank === 1) {
+
+                icon = "🥇";
+
+            } else if (
+                currentRank === 2
+            ) {
+
+                icon = "🥈";
+
+            } else if (
+                currentRank === 3
+            ) {
+
+                icon = "🥉";
+            }
+
+            const div =
+                document.createElement("div");
+
+            div.innerHTML = `
+                <span>
+                    ${icon}
+                    ${currentRank}
+                    -
+                    ${name}
+                    :
+                    ${currentScore}
+                </span>
+
+                <span
+                    data-effect="${name}"
+                >
+                    ${scoreEffects[name] || ""}
+                </span>
+            `;
+
+            playersDiv.appendChild(div);
+        });
     });
-});
+}
