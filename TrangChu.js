@@ -22,7 +22,7 @@ function quayLaiTuChonThoiGian() {
 
 function chuyenDenTheoSoMang() {
     const soMang = document.getElementById('soMang').value;
-    window.location.href = 'TheoSoMangMVC.html?soMang=' + soMang;
+    window.location.href = 'TheoSoMang.html?soMang=' + soMang;
 }
 
 function chuyenDenTheoThoiGian() {
