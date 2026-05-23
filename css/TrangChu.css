@@ -233,41 +233,9 @@ body {
     color: #666;
 }
 
-.overlay {
+.option {
 
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            .28
-        );
-
-    backdrop-filter:
-        blur(8px);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity .25s ease;
-
-    z-index: 999;
-}
-
-.overlay.active {
-
-    opacity: 1;
-
-    visibility: visible;
-}
-
-.popup {
+    display: none;
 
     position: fixed;
 
@@ -277,12 +245,11 @@ body {
     transform:
         translate(
             -50%,
-            -45%
-        )
-        scale(.85);
+            -50%
+        );
 
     width: 90%;
-    max-width: 380px;
+    max-width: 360px;
 
     background:
         linear-gradient(
@@ -291,11 +258,11 @@ body {
             #fff6fa
         );
 
-    border-radius: 30px;
-
     padding:
-        30px
+        28px
         24px;
+
+    border-radius: 30px;
 
     box-shadow:
         0 25px 60px
@@ -306,45 +273,24 @@ body {
             .25
         );
 
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        .3s ease;
-
-    z-index: 1000;
+    z-index: 1001;
 }
 
-.popup.active {
+.option label {
 
-    opacity: 1;
+    display: block;
 
-    visibility: visible;
+    margin-bottom: 12px;
 
-    transform:
-        translate(
-            -50%,
-            -50%
-        )
-        scale(1);
-}
+    font-size: 20px;
 
-.popup h2 {
-
-    margin-top: 0;
-
-    margin-bottom: 24px;
-
-    text-align: center;
-
-    font-size: 24px;
+    font-weight: 700;
 
     color:
         #e85486;
 }
 
-.popup select {
+.option select {
 
     width: 100%;
 
@@ -354,24 +300,18 @@ body {
 
     border:
         2px solid
-        #e4e4e4;
+        #e5e5e5;
 
     font-size: 16px;
 
     outline: none;
 
-    appearance: none;
+    margin-bottom: 20px;
 
-    background:
-        white;
-
-    margin-bottom: 24px;
-
-    transition:
-        .2s;
+    box-sizing: border-box;
 }
 
-.popup select:focus {
+.option select:focus {
 
     border-color:
         #4facfe;
@@ -386,7 +326,7 @@ body {
         );
 }
 
-.confirm-btn {
+.option button:not(.cancel-btn) {
 
     width: 100%;
 
@@ -409,34 +349,10 @@ body {
 
     font-size: 16px;
 
-    font-weight: 700;
-
-    transition:
-        .25s;
+    font-weight: bold;
 }
 
-.confirm-btn:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 12px 24px
-        rgba(
-            232,
-            84,
-            134,
-            .25
-        );
-}
-
-.confirm-btn:active {
-
-    transform:
-        scale(.98);
-}
-
-.close-btn {
+.cancel-btn {
 
     position: absolute;
 
@@ -457,21 +373,41 @@ body {
 
     font-size: 18px;
 
-    font-weight: bold;
-
     cursor: pointer;
+}
+
+.overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .28
+        );
+
+    backdrop-filter:
+        blur(8px);
+
+    opacity: 0;
+
+    visibility: hidden;
 
     transition:
         .25s;
+
+    z-index: 1000;
 }
 
-.close-btn:hover {
+.container.option-visible .overlay {
 
-    transform:
-        rotate(90deg);
+    opacity: 1;
 
-    background:
-        #ff4365;
+    visibility: visible;
 }
 
 @media (
