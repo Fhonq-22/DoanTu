@@ -8,10 +8,13 @@ export default class TrangChuController {
                 loai,
 
             an:
-                loai ===
-                "chonSoMang"
-                    ? "chonThoiGian"
-                    : "chonSoMang"
+                [
+                    "chonSoMang",
+                    "chonThoiGian"
+                ].filter(
+                    item =>
+                        item !== loai
+                )
         };
     }
 
@@ -23,10 +26,9 @@ export default class TrangChuController {
         const query =
             new URLSearchParams(
                 thamSo
-            );
+            ).toString();
 
         return query
-            .toString()
             ? `${trang}.html?${query}`
             : `${trang}.html`;
     }

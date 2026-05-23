@@ -4,51 +4,48 @@ from "../Controllers/game/TrangChuController.js";
 const controller =
     new TrangChuController();
 
-function hienThiLuaChon(id) {
+const container =
+    document.querySelector(
+        ".container"
+    );
 
-    const result =
-        controller
-            .hienThiLuaChon(
-                id
-            );
+function hienThiLuaChon(loai) {
+
+    const ketQua =
+        controller.hienThiLuaChon(
+            loai
+        );
 
     document
         .getElementById(
-            result.hienThi
+            ketQua.hienThi
         )
         .style.display =
         "block";
 
-    document
-        .getElementById(
-            result.an
-        )
-        .style.display =
-        "none";
+    ketQua.an.forEach(id => {
 
-    document
-        .querySelector(
-            ".container"
-        )
-        .classList.add(
-            "option-visible"
-        );
+        document
+            .getElementById(id)
+            .style.display =
+            "none";
+    });
+
+    container.classList.add(
+        "option-visible"
+    );
 }
 
-function dongLuaChon(id) {
+function anLuaChon(id) {
 
     document
         .getElementById(id)
         .style.display =
         "none";
 
-    document
-        .querySelector(
-            ".container"
-        )
-        .classList.remove(
-            "option-visible"
-        );
+    container.classList.remove(
+        "option-visible"
+    );
 }
 
 document
@@ -56,48 +53,53 @@ document
         "btnSoMang"
     )
     .onclick =
-    () => {
-
-    hienThiLuaChon(
-        "chonSoMang"
-    );
-};
+    () =>
+        hienThiLuaChon(
+            "chonSoMang"
+        );
 
 document
     .getElementById(
         "btnThoiGian"
     )
     .onclick =
+    () =>
+        hienThiLuaChon(
+            "chonThoiGian"
+        );
+
+document
+    .getElementById(
+        "btnTatCa"
+    )
+    .onclick =
     () => {
 
-    hienThiLuaChon(
-        "chonThoiGian"
-    );
-};
+        location.href =
+            controller.taoUrl(
+                "DoanTatCa"
+            );
+    };
 
 document
     .getElementById(
         "dongSoMang"
     )
     .onclick =
-    () => {
-
-    dongLuaChon(
-        "chonSoMang"
-    );
-};
+    () =>
+        anLuaChon(
+            "chonSoMang"
+        );
 
 document
     .getElementById(
         "dongThoiGian"
     )
     .onclick =
-    () => {
-
-    dongLuaChon(
-        "chonThoiGian"
-    );
-};
+    () =>
+        anLuaChon(
+            "chonThoiGian"
+        );
 
 document
     .getElementById(
@@ -106,22 +108,21 @@ document
     .onclick =
     () => {
 
-    const soMang =
-        document
-            .getElementById(
-                "soMang"
-            )
-            .value;
+        const soMang =
+            document
+                .getElementById(
+                    "soMang"
+                )
+                .value;
 
-    location.href =
-        controller
-            .taoUrl(
+        location.href =
+            controller.taoUrl(
                 "TheoSoMang",
                 {
                     soMang
                 }
             );
-};
+    };
 
 document
     .getElementById(
@@ -130,33 +131,34 @@ document
     .onclick =
     () => {
 
-    const thoiGian =
-        document
-            .getElementById(
-                "thoiGian"
-            )
-            .value;
+        const thoiGian =
+            document
+                .getElementById(
+                    "thoiGian"
+                )
+                .value;
 
-    location.href =
-        controller
-            .taoUrl(
+        location.href =
+            controller.taoUrl(
                 "TheoThoiGian",
                 {
                     thoiGian
                 }
             );
-};
+    };
 
 document
-    .getElementById(
-        "btnDoanTatCa"
+    .querySelector(
+        ".overlay"
     )
     .onclick =
     () => {
 
-    location.href =
-        controller
-            .taoUrl(
-                "DoanTatCa"
-            );
-};
+        anLuaChon(
+            "chonSoMang"
+        );
+
+        anLuaChon(
+            "chonThoiGian"
+        );
+    };
